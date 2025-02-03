@@ -21,13 +21,13 @@ const NavBar = () => {
     const [open, setOpen] = useState(false);
 
     return (
-        <div className="flex items-center justify-between h-[100px]">
+        <div className="grid grid-cols-2 md:grid-cols-3 items-center justify-between h-[150px]">
             <div className="logo">
                 <Link to={'/'}>
-                    <Logo height={100} width={100} />
+                    <Logo height={150} width={150} />
                 </Link>
             </div>
-            <nav>
+            <nav className="flex justify-end md:justify-center ">
                 <div className="block md:hidden">
                     <Sheet open={open} onOpenChange={setOpen}>
                         <SheetTrigger>
@@ -54,7 +54,7 @@ const NavBar = () => {
                         </SheetContent>
                     </Sheet>
                 </div>
-                <NavigationMenu className="hidden md:block">
+                <NavigationMenu className="hidden w-full md:block">
                     <NavigationMenuList>
                         <NavigationMenuItem>
                             <div className="flex justify-around">
@@ -72,12 +72,14 @@ const NavBar = () => {
                     </NavigationMenuList>
                 </NavigationMenu>
             </nav>
-            <div className="items-center hidden w-fit md:flex">
-                <div className="flex mr-4 contact">
-                    <PhoneCall />
-                    (406) 555-0120
+            <div className="flex justify-end">
+                <div className="items-center hidden w-fit md:flex">
+                    <div className="flex mr-4 contact">
+                        <PhoneCall />
+                        (406) 555-0120
+                    </div>
+                    <Button> Sign In</Button>
                 </div>
-                <Button> Sign In</Button>
             </div>
         </div>
 

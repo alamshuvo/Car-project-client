@@ -1,5 +1,8 @@
 import App from "@/App";
+import Cart from "@/pages/Cart";
+import Checkout from "@/pages/Checkout";
 import Home from "@/pages/Home";
+import ProductDetails from "@/pages/ProductDetails";
 import Products from "@/pages/Products";
 import { createBrowserRouter } from "react-router-dom";
 // import { adminPaths } from "./admin.routes";
@@ -20,6 +23,18 @@ const router = createBrowserRouter([
       {
         path: 'products',
         element: <Products />,
+      },
+      {
+        path: 'product-details/:id',
+        element: <ProductDetails />,
+      },
+      {
+        path: 'cart',
+        element: <Cart />,
+      },
+      {
+        path: 'checkout',
+        element: <Checkout />,
       },
     ]
   },

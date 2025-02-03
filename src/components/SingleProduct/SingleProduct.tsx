@@ -2,6 +2,7 @@ import { TProduct } from "@/types";
 import { Card, CardContent } from "../ui/card";
 import { Button } from "../ui/button";
 import StarRatings from 'react-star-ratings';
+import { Link } from "react-router-dom";
 
 interface ISingleProduct {
     product: TProduct,
@@ -46,7 +47,9 @@ const SingleProduct = ({ product }: ISingleProduct) => {
                     <p>
                         {product.productLink}
                     </p>
-                    <Button className="px-6 py-5 mt-4">Buy Now</Button>
+                    <Link to={'/product-details/1'}>
+                        <Button className="px-6 py-5 mt-4">Buy Now</Button>
+                    </Link>
                 </div>
             </CardContent>
         </Card>
