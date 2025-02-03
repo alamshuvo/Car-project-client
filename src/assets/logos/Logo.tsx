@@ -1,7 +1,7 @@
-import logo from './car_valley_logo.png';
+import logo from './car_valley_logo_cropped.png';
 
 interface ILogoProps {
-    height: number;
+    height?: number;
     width: number;
 };
 const Logo = ({ height, width }: ILogoProps) => {

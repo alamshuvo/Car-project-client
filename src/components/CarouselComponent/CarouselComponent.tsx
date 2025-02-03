@@ -34,8 +34,13 @@ const CarouselComponent = () => {
                     ))}
                 </CarouselContent>
 
-                <CarouselPrevious />
-                <CarouselNext />
+                <CarouselPrevious className="hidden md:inline-flex" />
+                <CarouselNext className="hidden md:inline-flex" />
+
+                <div className="relative flex justify-between w-full mt-8 md:hidden">
+                    <CarouselPrevious className="static" />
+                    <CarouselNext className="static" />
+                </div>
             </Carousel>
         </div>
     );

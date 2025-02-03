@@ -6,6 +6,7 @@ import Car4 from '../../assets/images/car4.webp';
 import { User } from "lucide-react";
 import SingleProduct from "../SingleProduct/SingleProduct";
 import { Button } from "../ui/button";
+import { Link } from "react-router-dom";
 
 const productData: TProduct[] = [
     {
@@ -72,11 +73,11 @@ const TopDeals = () => {
     return (
         <div>
             <h2 className="font-bold text-left text-red-500 mt-28">Our Vehicle</h2>
-            <div className="flex items-center justify-between mb-12">
+            <div className="flex flex-col items-end justify-between mb-12 md:items-center md:flex-row">
                 <h3 className='text-5xl font-bold text-left uppercase text-blue-950'>
                     Explore Our top deal
                 </h3>
-                <Button>See All Vehicles</Button>
+                <Link to={'/products'}><Button>See All Vehicles</Button></Link>
             </div>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
                 {productData.map((product, idx) => <SingleProduct product={product} key={idx} />)}

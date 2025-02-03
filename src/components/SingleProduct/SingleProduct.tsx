@@ -8,7 +8,7 @@ interface ISingleProduct {
 }
 const SingleProduct = ({ product }: ISingleProduct) => {
     return (
-        <Card className="transition-all duration-300 bg-gray-100 hover:bg-white hover:shadow-lg">
+        <Card className="transition-all duration-300 bg-gray-100 cursor-pointer hover:bg-white hover:shadow-lg">
             <CardContent className="p-2">
                 <img src={product.imageURL} className="h-[200px] rounded-xl mix-blend-multiply" alt="" />
                 <div className="p-4 pt-0">

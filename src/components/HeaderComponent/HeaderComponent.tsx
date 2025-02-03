@@ -15,10 +15,10 @@ const HeaderComponent = () => {
             <div className="absolute w-10 h-10 bg-green-500 rounded-full shadow-lg top-24 left-1/3"></div>
             <div className="absolute w-10 h-10 bg-yellow-500 rounded-full shadow-lg top-16 right-1/4"></div>
             <div className="relative z-10">
-                <h2 className='font-bold uppercase text-7xl text-blue-950'>
+                <h2 className='text-5xl font-bold uppercase md:text-7xl text-blue-950'>
                     Unlock your <MapPin className='inline text-red-500' size={80} /> <br /> travel experience
                 </h2>
-                <p className="max-w-xl my-4 text-gray-600 md:my-8 ">
+                <p className="max-w-xl my-4 text-white md:text-gray-600 md:my-8 ">
                     Lorem ipsum dolor sit amet consectetur. Sagittis augue odio enim lorem tellus.
                     Lorem ipsum dolor sit amet consectetur. Sagittis augue odio enim lorem tellus.
 
@@ -27,7 +27,7 @@ const HeaderComponent = () => {
                     Booking Now
                 </Button>
             </div>
-            <img className='absolute right-0 ' src={CarImage} alt="" />
+            <img className='absolute right-0 blur-sm md:blur-0' src={CarImage} alt="" />
         </div>
     );
 };
