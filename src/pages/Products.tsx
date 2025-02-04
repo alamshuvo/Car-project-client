@@ -17,8 +17,10 @@ import { useState } from "react";
 import { AirVent, Fuel, Menu, ParkingMeter } from "lucide-react";
 import Car1 from "../assets/images/car1.webp";
 import { User2 } from "lucide-react";
-import { TProduct } from "@/types";
+import { TUIProduct } from "@/types";
 import SingleProduct from "@/components/SingleProduct/SingleProduct";
+import { useGetAllProductsQuery } from "@/redux/features/admin/productManagement.api";
+import ProductListSkeleton from "@/components/ProductListSkeleton/ProductListSkeleton";
 // Sample car product data following the schema
 const dummyProducts = [
     {
@@ -137,7 +139,7 @@ const dummyProducts = [
 ];
 
 
-const productData: TProduct[] = dummyProducts.map(product => ({
+const productData: TUIProduct[] = dummyProducts.map(product => ({
     imageURL: Car1,
     title: product.name,
     brand: product.brand,
@@ -172,11 +174,18 @@ const brands = ["Honda", "Toyota", "Suzuki", "Mahindra"];
 const categories = ["SUV", "Hatchback", "Sedan"];
 
 const Products = () => {
+    const [params, setParams] = useState([]);
+    const { data, isLoading, isFetching } = useGetAllProductsQuery(params);
+    console.log(data);
+
     const [priceRange, setPriceRange] = useState([10000, 50000]);
     const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
     const [inStockOnly, setInStockOnly] = useState(false);
 
+    if (isLoading || isFetching) {
+        return <ProductListSkeleton />
+    }
     return (
         <div className="flex flex-col">
             <h3 className="my-12 text-5xl font-bold text-center uppercase text-blue-950">
@@ -186,6 +195,7 @@ const Products = () => {
                 {/* Sidebar for filters (Desktop) */}
                 <div className="hidden w-1/5 p-4 border-r md:block">
                     <FilterSection
+                        setParams={setParams}
                         priceRange={priceRange}
                         setPriceRange={setPriceRange}
                         setSelectedBrand={setSelectedBrand}
@@ -204,6 +214,7 @@ const Products = () => {
                     </DrawerTrigger>
                     <DrawerContent className="p-4">
                         <FilterSection
+                            setParams={setParams}
                             priceRange={priceRange}
                             setPriceRange={setPriceRange}
                             setSelectedBrand={setSelectedBrand}
@@ -270,6 +281,7 @@ type TFilterSectionProps = {
     setSelectedCategory: (value: string) => void;
     inStockOnly: boolean;
     setInStockOnly: (value: boolean) => void;
+    setParams: (value: []) => void;
 };
 
 const FilterSection = ({
@@ -279,7 +291,12 @@ const FilterSection = ({
     setSelectedCategory,
     inStockOnly,
     setInStockOnly,
+    setParams
 }: TFilterSectionProps) => {
+    function applyFilters(): void {
+        setParams([]);
+    }
+
     return (
         <Card className="p-4">
             <h4 className="mb-4 text-xl font-semibold">Filters</h4>
@@ -326,7 +343,7 @@ const FilterSection = ({
                 <span>In Stock Only</span>
             </div>
 
-            <Button className="w-full mt-4">Apply Filters</Button>
+            <Button className="w-full mt-4" onClick={applyFilters}>Apply Filters</Button>
         </Card>
     );
 };

@@ -30,7 +30,7 @@ export function NavMain({
             <SidebarMenu>
                 {items.map((item) => {
 
-                    // console.log(item);
+                    console.log(item);
                     if (item?.items) {
                         return (<Collapsible
                             key={item.title}
@@ -64,13 +64,16 @@ export function NavMain({
                         </Collapsible>);
                     }
                     else {
-                        return <SidebarMenuSubItem key={item?.title}>
-                            <SidebarMenuSubButton asChild isActive={item?.isActive}>
-                                <a href={item?.url}>
-                                    <span>{item?.title}</span>
-                                </a>
-                            </SidebarMenuSubButton>
-                        </SidebarMenuSubItem>
+                        return (
+                            <SidebarMenuSubItem key={item?.title}>
+                                <SidebarMenuButton isActive={item?.isActive} tooltip={item?.title}>
+                                    {item?.icon}
+                                    <a href={item?.url}>
+                                        <span>{item?.title}</span>
+                                    </a>
+                                </SidebarMenuButton>
+                            </SidebarMenuSubItem>
+                        );
                     }
 
                 })}

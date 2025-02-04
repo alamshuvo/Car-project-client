@@ -1,4 +1,4 @@
-import { TProduct } from "@/types";
+import { TUIProduct } from "@/types";
 import Car1 from '../../assets/images/car1.webp';
 import { AirVent, Fuel, ParkingMeter, User2 } from "lucide-react";
 import SingleProduct from "../SingleProduct/SingleProduct";
@@ -100,7 +100,7 @@ const dummyProducts = [
 ];
 
 
-const productData: TProduct[] = dummyProducts.map(product => ({
+const productData: TUIProduct[] = dummyProducts.map(product => ({
     imageURL: Car1,
     title: product.name,
     brand: product.brand,

@@ -3,7 +3,7 @@ export type TProductProperty = {
   title: string;
 };
 
-export type TProduct = {
+export type TUIProduct = {
   imageURL: string;
   title: string;
   brand: string;
@@ -14,4 +14,22 @@ export type TProduct = {
   reviewCount: number;
   productLink: string;
   productProperties: TProductProperty[];
+};
+
+export type TProduct = {
+  name: string;
+  brand: string;
+  price: string;
+  model: string;
+  stock: string;
+  description: string;
+  category: string;
+  images: string;
+  specifications: {
+    seatingCapacity: string;
+    fuelType: string;
+    mileage: string;
+    hasAC: string;
+    availableColors: string;
+  };
 };

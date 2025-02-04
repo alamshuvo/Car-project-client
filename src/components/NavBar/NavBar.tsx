@@ -2,7 +2,6 @@ import Logo from "@/assets/logos/Logo";
 import {
     NavigationMenu,
     NavigationMenuItem,
-    NavigationMenuLink,
     NavigationMenuList,
 } from "@/components/ui/navigation-menu"
 import {
@@ -58,15 +57,11 @@ const NavBar = () => {
                     <NavigationMenuList>
                         <NavigationMenuItem>
                             <div className="flex justify-around">
-                                <NavigationMenuLink className="block mr-4">
-                                    <Link to={'/'}>Home</Link>
-                                </NavigationMenuLink>
-                                <NavigationMenuLink className="block mr-4">
-                                    <Link to={'/products'}>Products</Link>
-                                </NavigationMenuLink>
-                                <NavigationMenuLink className="block mr-4">About</NavigationMenuLink>
-                                <NavigationMenuLink className="block mr-4">Vehicle</NavigationMenuLink>
-                                <NavigationMenuLink className="block mr-4">FAQ</NavigationMenuLink>
+                                <Link to={'/'} className="block mr-4">Home</Link>
+                                <Link to={'/products'} className="block mr-4">Products</Link>
+                                <Link to={'/about'} className="block mr-4">About</Link>
+                                <Link to={'/vehicle'} className="block mr-4">Vehicle</Link>
+                                <Link to={'/faq'} className="block mr-4">FAQ</Link>
                             </div>
                         </NavigationMenuItem>
                     </NavigationMenuList>

@@ -1,22 +1,24 @@
 import AdminDashboard from "@/pages/Admin/AdminDashboard";
 import CreateProduct from "@/pages/Admin/CreateProduct";
-import { LayoutDashboard } from "lucide-react";
+import { TRouteItemsPath } from "@/types";
+import { Box, LayoutDashboard } from "lucide-react";
 import { Navigate } from "react-router-dom";
 
 
-export const adminPaths = [
+export const adminPaths: TRouteItemsPath[] = [
     {
-        icon: <LayoutDashboard/>,
-        name: 'Dashboard',
+        name: '',
         index: true,
         element: <Navigate to="dashboard" replace />,
     },
     {
+        icon: <LayoutDashboard />,
         name: 'Dashboard',
         path: 'dashboard',
         element: <AdminDashboard />
     },
     {
+        icon: <Box/>,
         name: 'Product Management',
         children: [
             {

@@ -4,6 +4,7 @@ import { TRouteItemsPath, TSidebarItem } from '@/types';
 export const sidebarItemsGenerator = (items: TRouteItemsPath[]) => {
   const sidebarItems = items.reduce((acc: TSidebarItem[], item) => {
     if (item.path && item.name) {
+;
       acc.push({
         icon: item.icon,
         title: item.name,
@@ -13,6 +14,7 @@ export const sidebarItemsGenerator = (items: TRouteItemsPath[]) => {
     }
     if (item.children) {
       acc.push({
+        icon: item.icon,
         url: item.path || '#',
         isActive: false,
         title: item.name,
@@ -27,6 +29,7 @@ export const sidebarItemsGenerator = (items: TRouteItemsPath[]) => {
         }),
       });
     }
+    console.log(acc);
     return acc;
   }, []);
   return sidebarItems;
