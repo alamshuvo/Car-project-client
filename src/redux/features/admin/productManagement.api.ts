@@ -17,10 +17,11 @@ const productManagementApi = baseApi.injectEndpoints({
           params: params
         };
       },
-      transformResponse: (response: TResponseRedux<TProduct[]>) => {
-        if (response.success) {
+
+      transformResponse: (response: TResponseRedux<{ data: TProduct[] }>) => {
+        if (response.success && response?.data?.data) {
           return {
-            data: response.data,
+            data: response.data.data as TProduct[],
             meta: response.meta
           };
         }
