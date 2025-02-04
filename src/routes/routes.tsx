@@ -4,12 +4,10 @@ import Checkout from "@/pages/Checkout";
 import Home from "@/pages/Home";
 import ProductDetails from "@/pages/ProductDetails";
 import Products from "@/pages/Products";
+import { routeGenerator } from "@/utils/routesGenerator";
 import { createBrowserRouter } from "react-router-dom";
-// import { adminPaths } from "./admin.routes";
-// import { facultyPaths } from "./faculty.routes";
-// import { studentPaths } from "./student.routes";
-// import { routeGenerator } from "@/utils/routesGenerator";
-// import Login from "../pages/login/Login";
+import { adminPaths } from "./admin.routes";
+import AdminLayout from "@/layout/AdminLayout";
 
 const router = createBrowserRouter([
   {
@@ -39,11 +37,11 @@ const router = createBrowserRouter([
     ]
   },
 
-  // {
-  //   path: '/admin',
-  //   element: <App />,
-  //   children: routeGenerator(adminPaths)
-  // },
+  {
+    path: '/admin',
+    element: <AdminLayout />,
+    children: routeGenerator(adminPaths)
+  },
   // {
   //   path: '/faculty',
   //   element: <App />,

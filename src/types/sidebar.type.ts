@@ -1,17 +1,22 @@
 import { ReactNode } from "react";
 
 export type TRoute = {
-  path: string;
+  index?: boolean;
+  path?: string;
   element: ReactNode;
 };
 
 export type TSidebarItem = {
-  key: string;
-  label: ReactNode;
-  children?: TSidebarItem[];
+  title: string;
+  url: string;
+  icon?: ReactNode;
+  isActive: boolean;
+  items?: TSidebarItem[];
 } | undefined;
 
 export type TRouteItemsPath = {
+  icon?: ReactNode;
+  index?: boolean;
   name: string;
   path?: string;
   element?: ReactNode;
