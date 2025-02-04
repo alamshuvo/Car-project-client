@@ -1,5 +1,5 @@
 import baseApi from "@/redux/api/baseApi";
-import { TQueryParam } from "@/types";
+import { TProduct, TQueryParam, TResponseRedux } from "@/types";
 
 const productManagementApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -16,6 +16,15 @@ const productManagementApi = baseApi.injectEndpoints({
           method: "GET",
           params: params
         };
+      },
+      transformResponse: (response: TResponseRedux<TProduct[]>) => {
+        if (response.success) {
+          return {
+            data: response.data,
+            meta: response.meta
+          };
+        }
+        return response;
       }
     }),
     createProduct: builder.mutation({

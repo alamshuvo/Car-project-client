@@ -91,7 +91,7 @@ const CreateProduct = () => {
                     <DynamicImageInput name="images" label="Add Product Image URLs" />
                     <div className="space-y-4">
                         <h2 className="text-xl font-semibold text-gray-800 ">Enter Car Specifications</h2>
-                        <FormInput name="specifications.seatingCapacity" type="text" label="Seating Capacity" />
+                        <FormInput name="specifications.seatingCapacity" type="number" label="Seating Capacity" />
                         <FormInput name="specifications.fuelType" type="text" label="Fuel Type" />
                         <FormInput name="specifications.mileage" type="text" label="Mileage" />
 

@@ -19,14 +19,14 @@ export type TUIProduct = {
 export type TProduct = {
   name: string;
   brand: string;
-  price: string;
+  price: number;
   model: string;
-  stock: string;
+  stock: number;
   description: string;
   category: string;
   images: string;
   specifications: {
-    seatingCapacity: string;
+    seatingCapacity: number;
     fuelType: string;
     mileage: string;
     hasAC: string;

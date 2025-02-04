@@ -13,7 +13,12 @@ const FormInput = ({ type, name, label }: TInput) => {
         <div style={{ marginBottom: '10px' }}>
             <Controller name={name} render={({ field, fieldState: { error } }) => <div>
                 {label && <Label htmlFor={name}>{label}</Label>}
-                <Input style={{ marginTop: '5px' }} type={type} id={name} {...field} />
+                <Input
+                    type={type}
+                    id={name}
+                    {...field}
+                    onChange={(e) => field.onChange(type === "number" ? Number(e.target.value) : e.target.value)}
+                />
                 {error && <small style={{ color: "red" }}>{error.message}</small>}
             </div>} />
         </div>

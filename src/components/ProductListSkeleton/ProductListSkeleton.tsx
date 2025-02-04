@@ -2,7 +2,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 const ProductListSkeleton = () => {
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col w-full">
             {/* Title Skeleton */}
             <div className="my-12 text-center">
                 <Skeleton className="w-64 h-12 mx-auto" />

@@ -5,7 +5,7 @@ import { FormControl, FormItem, FormMessage } from "../ui/form";
 
 export type TOption = { value: string; label: string };
 
-type TPHSelectProps = {
+type TFormSelectProps = {
     name: string;
     label: string;
     options: TOption[];
@@ -13,7 +13,7 @@ type TPHSelectProps = {
     placeholder?: string;
 };
 
-const FormSelect = ({ name, label, options, disabled, placeholder = "Select an option" }: TPHSelectProps) => {
+const FormSelect = ({ name, label, options, disabled, placeholder = "Select an option" }: TFormSelectProps) => {
     const { control } = useFormContext();
 
     return (

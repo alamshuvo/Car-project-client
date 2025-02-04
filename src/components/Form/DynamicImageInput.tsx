@@ -7,7 +7,7 @@ const DynamicImageInput = ({ name, label }: { name: string; label?: string }) =>
     const { control } = useFormContext();
     const { fields, append, remove } = useFieldArray({
         control,
-        name, // e.g., "images"
+        name,
     });
 
     return (
@@ -17,7 +17,7 @@ const DynamicImageInput = ({ name, label }: { name: string; label?: string }) =>
             {fields.map((field, index) => (
                 <div key={field.id} className="flex items-center gap-2">
                     <Controller
-                        name={`${name}[${index}]`} // Directly access the string value in the array
+                        name={`${name}[${index}]`}
                         control={control}
                         render={({ field, fieldState: { error } }) => (
                             <div className="flex flex-col w-full">
