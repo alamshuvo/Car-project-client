@@ -55,7 +55,7 @@ const ProductDetails = () => {
     const handleDecrement = () => setQuantity(prev => Math.max(prev - 1, 1));
 
     return (
-        <div className="w-full  bg-gray-50">
+        <div className="w-full bg-gray-50">
             {/* Product/Service Details */}
             <div className="flex gap-12 px-6 py-12 mx-auto ">
                 {/* Images Column */}
