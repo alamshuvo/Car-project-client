@@ -26,7 +26,8 @@ const productManagementApi = baseApi.injectEndpoints({
           };
         }
         return response;
-      }
+      },
+      providesTags: ["product"]
     }),
     getSingleProduct: builder.query({
       query: ({ productId }) => {
@@ -51,8 +52,18 @@ const productManagementApi = baseApi.injectEndpoints({
           body: product
         };
       }
+    }),
+    deleteProduct: builder.mutation({
+      query: ({ productId }) => {
+        return {
+          url: `/products/${productId}`,
+          method: "DELETE"
+        };
+      },
+      invalidatesTags: ["product"]
     })
   })
 });
 
-export const { useGetAllProductsQuery, useGetSingleProductQuery, useCreateProductMutation } = productManagementApi;
+export const { useGetAllProductsQuery, useGetSingleProductQuery, useCreateProductMutation, useDeleteProductMutation } =
+  productManagementApi;

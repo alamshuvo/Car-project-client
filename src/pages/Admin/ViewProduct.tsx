@@ -33,141 +33,166 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { TProduct } from "@/types"
 import { useState } from "react"
-import { useGetAllProductsQuery } from "@/redux/features/admin/productManagement.api"
+import { useDeleteProductMutation, useGetAllProductsQuery } from "@/redux/features/admin/productManagement.api"
 import { Link } from "react-router-dom"
-
-const columns: ColumnDef<TProduct>[] = [
-    {
-        id: "select",
-        header: ({ table }) => (
-            <Checkbox
-                checked={
-                    table.getIsAllPageRowsSelected() ||
-                    (table.getIsSomePageRowsSelected() && "indeterminate")
-                }
-                onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-                aria-label="Select all"
-            />
-        ),
-        cell: ({ row }) => (
-            <Checkbox
-                checked={row.getIsSelected()}
-                onCheckedChange={(value) => row.toggleSelected(!!value)}
-                aria-label="Select row"
-            />
-        ),
-        enableSorting: false,
-        enableHiding: false,
-    },
-    {
-        accessorKey: "name",
-        header: ({ column }) => {
-            return (
-                <Button
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                >
-                    Name
-                    <ArrowUpDown className="w-4 h-4 ml-2" />
-                </Button>
-            )
-        },
-        cell: ({ row }) => <div className="capitalize">{row.getValue("name")}</div>,
-    },
-    {
-        accessorKey: "brand",
-        header: () => {
-            return 'Brand';
-
-        },
-    },
-    {
-        accessorKey: "model",
-        header: "Model",
-        cell: ({ row }) => <div>{row.getValue("model")}</div>,
-    },
-    {
-        accessorKey: "category",
-        header: "Category",
-        cell: ({ row }) => <div className="capitalize">{row.getValue("category")}</div>,
-    },
-    {
-        accessorKey: "price",
-        header: ({ column }) => {
-            return (
-                <div className="w-full">
-                    <Button
-                        variant="ghost"
-                        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    >
-                        Price
-                        <ArrowUpDown className="w-4 h-4 ml-2" />
-                    </Button>
-                </div>
-            )
-        },
-        cell: ({ row }) => {
-            const price = parseFloat(row.getValue("price"))
-            const formatted = new Intl.NumberFormat("en-US", {
-                style: "currency",
-                currency: "USD",
-            }).format(price)
-
-            return <div className="font-medium text-right">{formatted}</div>
-        },
-    },
-    {
-        accessorKey: "stock",
-        header: () => <div className="text-right">Stock</div>,
-        cell: ({ row }) => {
-            return <div className="text-right">{row.getValue("stock")}</div>
-        },
-    },
-    {
-        id: "actions",
-        enableHiding: false,
-        cell: ({ row }) => {
-            const product = row.original
-
-            return (
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" className="w-8 h-8 p-0">
-                            <span className="sr-only">Open menu</span>
-                            <MoreHorizontal className="w-4 h-4" />
-                        </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuItem
-                            onClick={() => navigator.clipboard.writeText(product._id as string)}
-                        >
-                            Copy product ID
-                        </DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem>
-                            <Link to={`/admin/product-details/${product._id}`}>View details</Link>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem>
-                            <Link to={`/admin/product-edit/${product._id}`}>Edit product</Link>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem className="text-red-600">Delete product</DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
-            )
-        },
-    },
-]
+import { toast } from "sonner"
 
 const ViewProduct = () => {
     const [params] = useState([]);
     const { data: response, isLoading } = useGetAllProductsQuery(params);
+    const [deleteProduct] = useDeleteProductMutation();
+
+
     const productData = response?.data as TProduct[] || [];
 
     const [sorting, setSorting] = useState<SortingState>([])
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
     const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
     const [rowSelection, setRowSelection] = useState({});
+
+    const deleteProductOnClick = async (productId: string) => {
+        const toastId = toast.loading('Deleting product...');
+        try {
+            const res = await deleteProduct({ productId });
+            if (res.error) {
+                toast.error('Server error occurred!', { id: toastId });
+            } else {
+                toast.success('Product deleted successfully', { id: toastId });
+                // refetch();
+            }
+        } catch (e) {
+            console.log(e);
+            toast.error('Some error occurred while deleting!', { id: toastId });
+        }
+    }
+
+
+    const columns: ColumnDef<TProduct>[] = [
+        {
+            id: "select",
+            header: ({ table }) => (
+                <Checkbox
+                    checked={
+                        table.getIsAllPageRowsSelected() ||
+                        (table.getIsSomePageRowsSelected() && "indeterminate")
+                    }
+                    onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+                    aria-label="Select all"
+                />
+            ),
+            cell: ({ row }) => (
+                <Checkbox
+                    checked={row.getIsSelected()}
+                    onCheckedChange={(value) => row.toggleSelected(!!value)}
+                    aria-label="Select row"
+                />
+            ),
+            enableSorting: false,
+            enableHiding: false,
+        },
+        {
+            accessorKey: "name",
+            header: ({ column }) => {
+                return (
+                    <Button
+                        variant="ghost"
+                        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    >
+                        Name
+                        <ArrowUpDown className="w-4 h-4 ml-2" />
+                    </Button>
+                )
+            },
+            cell: ({ row }) => <div className="capitalize">{row.getValue("name")}</div>,
+        },
+        {
+            accessorKey: "brand",
+            header: () => {
+                return 'Brand';
+
+            },
+        },
+        {
+            accessorKey: "model",
+            header: "Model",
+            cell: ({ row }) => <div>{row.getValue("model")}</div>,
+        },
+        {
+            accessorKey: "category",
+            header: "Category",
+            cell: ({ row }) => <div className="capitalize">{row.getValue("category")}</div>,
+        },
+        {
+            accessorKey: "price",
+            header: ({ column }) => {
+                return (
+                    <div className="w-full">
+                        <Button
+                            variant="ghost"
+                            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                        >
+                            Price
+                            <ArrowUpDown className="w-4 h-4 ml-2" />
+                        </Button>
+                    </div>
+                )
+            },
+            cell: ({ row }) => {
+                const price = parseFloat(row.getValue("price"))
+                const formatted = new Intl.NumberFormat("en-US", {
+                    style: "currency",
+                    currency: "USD",
+                }).format(price)
+
+                return <div className="font-medium text-right">{formatted}</div>
+            },
+        },
+        {
+            accessorKey: "stock",
+            header: () => <div className="text-right">Stock</div>,
+            cell: ({ row }) => {
+                return <div className="text-right">{row.getValue("stock")}</div>
+            },
+        },
+        {
+            id: "actions",
+            enableHiding: false,
+            cell: ({ row }) => {
+                const product = row.original
+
+                return (
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" className="w-8 h-8 p-0">
+                                <span className="sr-only">Open menu</span>
+                                <MoreHorizontal className="w-4 h-4" />
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                            <DropdownMenuItem
+                                onClick={() => navigator.clipboard.writeText(product._id as string)}
+                            >
+                                Copy product ID
+                            </DropdownMenuItem>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem>
+                                <Link to={`/admin/product-details/${product._id}`}>View details</Link>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem>
+                                <Link to={`/admin/product-edit/${product._id}`}>Edit product</Link>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem className="text-red-600" onClick={() => {
+                                deleteProductOnClick(product._id as string)
+                            }}>
+                                Delete product
+                            </DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                )
+            },
+        },
+    ];
 
     const table = useReactTable({
         data: productData,
