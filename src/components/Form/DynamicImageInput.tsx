@@ -3,7 +3,7 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { TrashIcon, PlusIcon } from "lucide-react";
 
-const DynamicImageInput = ({ name, label }: { name: string; label?: string }) => {
+const DynamicImageInput = ({ name, label, readonly }: { name: string; label?: string, readonly?: boolean }) => {
     const { control } = useFormContext();
     const { fields, append, remove } = useFieldArray({
         control,
@@ -21,12 +21,12 @@ const DynamicImageInput = ({ name, label }: { name: string; label?: string }) =>
                         control={control}
                         render={({ field, fieldState: { error } }) => (
                             <div className="flex flex-col w-full">
-                                <Input type="text" placeholder="Enter image URL" {...field} />
+                                <Input type="text" placeholder="Enter image URL" {...field} readOnly={readonly} />
                                 {error && <small style={{ color: "red" }}>{error.message}</small>}
                             </div>
                         )}
                     />
-                    {fields.length > 1 && (
+                    {!readonly && fields.length > 1 && (
                         <Button type="button" variant="destructive" size="icon" onClick={() => remove(index)}>
                             <TrashIcon className="w-5 h-5" />
                         </Button>
@@ -34,9 +34,9 @@ const DynamicImageInput = ({ name, label }: { name: string; label?: string }) =>
                 </div>
             ))}
 
-            <Button type="button" variant="outline" onClick={() => append("")}>
+            {!readonly && <Button type="button" variant="outline" onClick={() => append("")}>
                 <PlusIcon className="w-4 h-4 mr-2" /> Add Image
-            </Button>
+            </Button>}
         </div>
     );
 };

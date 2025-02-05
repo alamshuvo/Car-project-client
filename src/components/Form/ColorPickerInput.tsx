@@ -5,7 +5,7 @@ import { Label } from "../ui/label";
 import { Button } from "../ui/button";
 import { X } from "lucide-react";
 
-const ColorPickerInput = ({ name, label }: { name: string; label: string }) => {
+const ColorPickerInput = ({ name, label, readonly }: { name: string; label: string, readonly?: boolean }) => {
     const { control, setValue, watch } = useFormContext();
     const colors = watch(name, []) || [];
     const [newColor, setNewColor] = useState("#000000");
@@ -31,9 +31,9 @@ const ColorPickerInput = ({ name, label }: { name: string; label: string }) => {
                     onChange={(e) => setNewColor(e.target.value)}
                     className="w-12 h-10 border rounded-lg"
                 />
-                <Button type="button" onClick={addColor} className="px-3 py-1 text-sm">
+                {!readonly && <Button type="button" onClick={addColor} className="px-3 py-1 text-sm">
                     Add Color
-                </Button>
+                </Button>}
             </div>
 
             <Controller
@@ -48,9 +48,9 @@ const ColorPickerInput = ({ name, label }: { name: string; label: string }) => {
                                     style={{ backgroundColor: color }}
                                 ></span>
                                 <span className="text-sm">{color}</span>
-                                <button type="button" onClick={() => removeColor(color)}>
+                                {!readonly && <button type="button" onClick={() => removeColor(color)}>
                                     <X className="w-4 h-4 text-red-500" />
-                                </button>
+                                </button>}
                             </div>
                         ))}
 

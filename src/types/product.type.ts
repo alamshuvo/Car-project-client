@@ -17,6 +17,7 @@ export type TUIProduct = {
 };
 
 export type TProduct = {
+  _id?: string;
   name: string;
   brand: string;
   price: number;

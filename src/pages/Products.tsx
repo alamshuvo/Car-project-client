@@ -13,7 +13,7 @@ import { useState } from "react";
 import { AirVent, Box, Fuel, Menu, ParkingMeter } from "lucide-react";
 import Car1 from "../assets/images/car1.webp";
 import { User2 } from "lucide-react";
-import { TProduct, TQueryParam, TUIProduct } from "@/types";
+import { TQueryParam, TUIProduct } from "@/types";
 import SingleProduct from "@/components/SingleProduct/SingleProduct";
 import { useGetAllProductsQuery } from "@/redux/features/admin/productManagement.api";
 import ProductListSkeleton from "@/components/ProductListSkeleton/ProductListSkeleton";
@@ -24,7 +24,7 @@ const Products = () => {
     const { data, isLoading, isFetching } = useGetAllProductsQuery(params);
     let productData: TUIProduct[] = [];
     if (data?.data) {
-        const responseData = data?.data as TProduct[];
+        const responseData = data?.data;
         productData = responseData.map(product => ({
             imageURL: Car1,
             title: product.name,

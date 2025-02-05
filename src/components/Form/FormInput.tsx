@@ -6,14 +6,16 @@ type TInput = {
     type: string,
     name: string,
     label?: string,
+    readonly?: boolean
 }
 
-const FormInput = ({ type, name, label }: TInput) => {
+const FormInput = ({ type, name, label, readonly }: TInput) => {
     return (
         <div style={{ marginBottom: '10px' }}>
             <Controller name={name} render={({ field, fieldState: { error } }) => <div>
                 {label && <Label htmlFor={name}>{label}</Label>}
                 <Input
+                    readOnly={readonly}
                     type={type}
                     id={name}
                     {...field}

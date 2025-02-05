@@ -17,7 +17,7 @@ export const sidebarItemsGenerator = (items: TRouteItemsPath[]) => {
         icon: item.icon,
         url: item.path || '#',
         isActive: false,
-        title: item.name,
+        title: item.name!,
         items: item.children.map((child) => {
           if (child.name) {
             return {

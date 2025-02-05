@@ -29,8 +29,6 @@ export function NavMain({
             <SidebarGroupLabel>Admin Control</SidebarGroupLabel>
             <SidebarMenu>
                 {items.map((item) => {
-
-                    console.log(item);
                     if (item?.items) {
                         return (<Collapsible
                             key={item.title}
@@ -52,7 +50,7 @@ export function NavMain({
                                         {item.items?.map((subItem) => subItem && (
                                             <SidebarMenuSubItem key={subItem.title}>
                                                 <SidebarMenuSubButton asChild isActive={subItem.isActive}>
-                                                    <a href={subItem.url}>
+                                                    <a href={`/admin/${subItem.url}`}>
                                                         <span>{subItem.title}</span>
                                                     </a>
                                                 </SidebarMenuSubButton>
@@ -68,7 +66,7 @@ export function NavMain({
                             <SidebarMenuSubItem key={item?.title}>
                                 <SidebarMenuButton isActive={item?.isActive} tooltip={item?.title}>
                                     {item?.icon}
-                                    <a href={item?.url}>
+                                    <a href={`/admin/${item?.url}`}>
                                         <span>{item?.title}</span>
                                     </a>
                                 </SidebarMenuButton>

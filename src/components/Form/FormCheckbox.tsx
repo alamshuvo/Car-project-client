@@ -5,9 +5,10 @@ import { Checkbox } from "../ui/checkbox";
 type TInput = {
     name: string;
     label?: string;
+    readonly?: boolean;
 }
 
-const FormCheckbox = ({ name, label }: TInput) => {
+const FormCheckbox = ({ name, label, readonly }: TInput) => {
     const { control } = useFormContext();
 
     return (
@@ -20,7 +21,7 @@ const FormCheckbox = ({ name, label }: TInput) => {
                         {label && <Label htmlFor={name} className="mr-4"> {label} </Label>}
                         <Checkbox
                             checked={value}
-                            onCheckedChange={onChange}
+                            onCheckedChange={readonly ? () => { } : onChange}
                             id={name}
                             {...field}
                         />

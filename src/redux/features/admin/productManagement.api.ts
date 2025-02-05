@@ -18,12 +18,27 @@ const productManagementApi = baseApi.injectEndpoints({
         };
       },
 
-      transformResponse: (response: TResponseRedux<{ data: TProduct[] }>) => {
-        if (response.success && response?.data?.data) {
+      transformResponse: (response: TResponseRedux<TProduct[]>) => {
+        if (response.success && response?.data) {
           return {
-            data: response.data.data as TProduct[],
+            data: response.data,
             meta: response.meta
           };
+        }
+        return response;
+      }
+    }),
+    getSingleProduct: builder.query({
+      query: ({ productId }) => {
+        return {
+          url: `/products/${productId}`,
+          method: "GET"
+        };
+      },
+
+      transformResponse: (response: TResponseRedux<TProduct>) => {
+        if (response.success && response?.data) {
+          return response.data;
         }
         return response;
       }
@@ -40,4 +55,4 @@ const productManagementApi = baseApi.injectEndpoints({
   })
 });
 
-export const { useGetAllProductsQuery, useCreateProductMutation } = productManagementApi;
+export const { useGetAllProductsQuery, useGetSingleProductQuery, useCreateProductMutation } = productManagementApi;
