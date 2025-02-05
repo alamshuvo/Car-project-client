@@ -8,6 +8,8 @@ import { routeGenerator } from "@/utils/routesGenerator";
 import { createBrowserRouter } from "react-router-dom";
 import { adminPaths } from "./admin.routes";
 import AdminLayout from "@/layout/AdminLayout";
+import Login from "@/pages/Login";
+import Register from "@/pages/Register";
 
 const router = createBrowserRouter([
   {
@@ -52,10 +54,14 @@ const router = createBrowserRouter([
   //   element: <App />,
   //   children: routeGenerator(studentPaths)
   // },
-  // {
-  //   path: '/login',
-  //   element: <Login/>
-  // }
+  {
+    path: '/login',
+    element: <Login />
+  },
+  {
+    path: '/register',
+    element: <Register />
+  }
 ]);
 
 export default router;
