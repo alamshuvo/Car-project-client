@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
     return (
-        <div className="flex flex-col flex-1 gap-4 p-4 pt-0 text-blue-800">
+        <div className="flex flex-col flex-1 gap-4 p-4 pt-0 mt-10 text-blue-800">
             {/* Footer Grid */}
             <div className="grid gap-4 auto-rows-min md:grid-cols-3">
                 {/* Column 1: Company Info */}

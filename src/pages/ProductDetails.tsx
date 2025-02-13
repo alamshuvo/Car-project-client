@@ -49,7 +49,7 @@ const ProductDetails = () => {
     if (isLoading) return 'Loading...';
     if (!productData) return 'Loading...';
     return (
-        <div className="w-full bg-gray-50">
+        <div className="w-full rounded-xl bg-gray-50">
             {/* Product/Service Details */}
             <div className="flex gap-12 px-6 py-12 mx-auto ">
                 {/* Images Column */}
@@ -98,19 +98,24 @@ const ProductDetails = () => {
                         </div>
                     </div>
 
-                    {/* Quantity Control */}
-                    <div className="flex items-center space-x-4">
-                        <button
-                            className="px-4 py-2 bg-gray-200 border rounded-md"
-                            onClick={handleDecrement}>
-                            -
-                        </button>
-                        <span>{quantity}</span>
-                        <button
-                            className="px-4 py-2 bg-gray-200 border rounded-md"
-                            onClick={handleIncrement}>
-                            +
-                        </button>
+                    <div className="flex items-center justify-between">
+                        {/* Quantity Control */}
+                        <div className="flex items-center space-x-4">
+                            <button
+                                className="px-4 py-2 bg-gray-200 border rounded-md"
+                                onClick={handleDecrement}>
+                                -
+                            </button>
+                            <span>{quantity}</span>
+                            <button
+                                className="px-4 py-2 bg-gray-200 border rounded-md"
+                                onClick={handleIncrement}>
+                                +
+                            </button>
+                        </div>
+                        <p className='pr-2 text-3xl font-bold'>
+                            ${productData.price}
+                        </p>
                     </div>
 
 
