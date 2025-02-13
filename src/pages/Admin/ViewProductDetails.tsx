@@ -1,72 +1,117 @@
-
-import { zodResolver } from "@hookform/resolvers/zod";
-import FormComponent from "@/components/Form/FormComponent";
-import { createProductSchema } from "@/schema/productValidationSchema";
-import { useGetSingleProductQuery } from "@/redux/features/admin/productManagement.api";
-import FormInput from "@/components/Form/FormInput";
-import FormTextarea from "@/components/Form/FormTextarea";
-import FormSelect, { TOption } from "@/components/Form/FormSelect";
-import DynamicImageInput from "@/components/Form/DynamicImageInput";
-import ColorPickerInput from "@/components/Form/ColorPickerInput";
-import FormCheckbox from "@/components/Form/FormCheckbox";
 import { useParams } from "react-router-dom";
+import { useGetSingleProductQuery } from "@/redux/features/admin/productManagement.api";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
+import { Skeleton } from "@/components/ui/skeleton";
+import { TProduct } from "@/types";
 
-const carCategories = [
-    "Sedan", "Hatchback", "Coupe", "Convertible",
-    "Compact SUV", "Mid-Size SUV", "Full-Size SUV",
-    "Pickup Truck", "Minivan", "Cargo Van",
-    "Sports Car", "Supercar", "Luxury Sedan/SUV",
-    "Electric Vehicle (EV)", "Hybrid Car", "Plug-in Hybrid (PHEV)"
-];
 
 const ViewProductDetails = () => {
-
     const { id: productId } = useParams<{ id: string }>();
     const { data, isLoading } = useGetSingleProductQuery({ productId });
+
+    if (isLoading) {
+        return <Skeleton className="w-full h-64" />;
+    }
+
     console.log(data);
+    const productData = data as TProduct;
 
-    const carOptions: TOption[] = carCategories.map((category) => (
-        {
-            label: category,
-            value: category.toLowerCase(),
-        }
-    ))
+    return (
+        <div className="container grid grid-cols-1 gap-6 px-4 py-6 mx-auto lg:grid-cols-2">
+            {/* Car Basic Details */}
+            <Card>
+                <CardHeader>
+                    <CardTitle>{productData?.name}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <Table>
+                        <TableBody>
+                            <TableRow>
+                                <TableCell className="font-medium">Brand</TableCell>
+                                <TableCell>{productData?.brand}</TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell className="font-medium">Model</TableCell>
+                                <TableCell>{productData?.model}</TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell className="font-medium">Price</TableCell>
+                                <TableCell>${productData?.price}</TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell className="font-medium">Stock</TableCell>
+                                <TableCell>{productData?.stock}</TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell className="font-medium">Category</TableCell>
+                                <TableCell>{productData?.category}</TableCell>
+                            </TableRow>
+                        </TableBody>
+                    </Table>
+                </CardContent>
+            </Card>
 
+            {/* Car Specifications */}
+            <Card>
+                <CardHeader>
+                    <CardTitle>Car Specifications</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <Table>
+                        <TableBody>
+                            <TableRow>
+                                <TableCell className="font-medium">Seating Capacity</TableCell>
+                                <TableCell>{productData?.specifications?.seatingCapacity}</TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell className="font-medium">Fuel Type</TableCell>
+                                <TableCell>{productData?.specifications?.fuelType}</TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell className="font-medium">Mileage</TableCell>
+                                <TableCell>{productData?.specifications?.mileage}</TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell className="font-medium">Has AC</TableCell>
+                                <TableCell>
+                                    {productData?.specifications?.hasAC ? (
+                                        <Badge className="bg-green-500">Yes</Badge>
+                                    ) : (
+                                        <Badge className="bg-red-500">No</Badge>
+                                    )}
+                                </TableCell>
+                            </TableRow>
+                        </TableBody>
+                    </Table>
+                </CardContent>
+            </Card>
 
-    return isLoading ? (<div></div>) : (
-        <FormComponent
-            onSubmit={() => { }}
-            resolver={zodResolver(createProductSchema)}
-            defaultValues={data}
-        >
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                <div className="w-full p-6 mx-auto space-y-4 bg-white rounded-lg shadow-lg">
-                    <h2 className="text-xl font-semibold text-gray-800">Car Basic Details</h2 >
-                    <FormInput readonly={true} name="name" type="text" label="Product Title" />
-                    <FormInput readonly={true} name="brand" type="text" label="Product Brand" />
-                    <FormInput readonly={true} name="price" type="number" label="Product Price" />
-                    <FormInput readonly={true} name="model" type="text" label="Product Model" />
-                    <FormInput readonly={true} name="stock" type="number" label="Product Stock" />
-                    <FormTextarea name="description" label="Product Description" />
-                    <FormSelect name="category" label="Select Car Type" options={carOptions} />
-                </div >
-                <div className="w-full p-6 mx-auto space-y-12 bg-white rounded-lg shadow-lg">
+            {/* Image Gallery */}
+            <Card className="col-span-1 lg:col-span-2">
+                <CardHeader>
+                    <CardTitle>Images</CardTitle>
+                </CardHeader>
+                <CardContent className="grid grid-cols-2 gap-4 md:grid-cols-4">
+                    {productData?.images?.map((img: string, index: number) => (
+                        <img key={index} src={img} alt="Car Image" width={150} height={150} className="rounded-lg shadow" />
+                    ))}
+                </CardContent>
+            </Card>
 
-                    <DynamicImageInput name="images" label="Product Image URLs" readonly={true} />
-                    <div className="space-y-4">
-                        <h2 className="text-xl font-semibold text-gray-800 ">Car Specifications</h2>
-                        <FormInput readonly={true} name="specifications.seatingCapacity" type="number" label="Seating Capacity" />
-                        <FormInput readonly={true} name="specifications.fuelType" type="text" label="Fuel Type" />
-                        <FormInput readonly={true} name="specifications.mileage" type="text" label="Mileage" />
-
-                        <FormCheckbox label="Has AC" name="specifications.hasAC" readonly={true} />
-
-                        <ColorPickerInput name="specifications.availableColors" label="Available Colors" readonly={true} />
-
-                    </div>
-                </div>
-            </div >
-        </FormComponent >
+            {/* Available Colors */}
+            <Card>
+                <CardHeader>
+                    <CardTitle>Available Colors</CardTitle>
+                </CardHeader>
+                <CardContent className="flex flex-wrap gap-2">
+                    {productData?.specifications?.availableColors?.map((color: string, index: number) => (
+                        <Badge key={index} style={{ backgroundColor: color }} className="w-16 h-16 px-4 py-1 text-white rounded" />
+                    ))}
+                </CardContent>
+            </Card>
+        </div>
     );
 };
 

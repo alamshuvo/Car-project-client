@@ -9,6 +9,7 @@ interface ISingleProduct {
     product: TUIProduct,
 }
 const SingleProduct = ({ product }: ISingleProduct) => {
+    console.log({singleProduct: product});
     return (
         <Card className="relative transition-all duration-300 bg-gray-100 cursor-pointer hover:bg-white hover:shadow-lg">
             <p className="absolute right-0 p-2 m-2 text-xl font-bold text-white rounded-md bg-primary">$ {product.price}</p>
@@ -47,10 +48,10 @@ const SingleProduct = ({ product }: ISingleProduct) => {
                         ))}
                     </div>
                     <div className="flex items-center justify-between">
-                        <Link to={'/product-details/1'}>
+                        <Link to={`/product-details/${product._id}`}>
                             <Button className="px-6 py-5"> Add to<ShoppingCart />  </Button>
                         </Link>
-                        <Link to={'/product-details/1'}>
+                        <Link to={`/product-details/${product._id}`}>
                             <Button variant='outline' className="px-6 py-5">View</Button>
                         </Link>
                     </div>

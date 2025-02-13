@@ -4,6 +4,7 @@ export type TProductProperty = {
 };
 
 export type TUIProduct = {
+  _id?: string;
   imageURL: string;
   title: string;
   brand: string;
@@ -25,12 +26,12 @@ export type TProduct = {
   stock: number;
   description: string;
   category: string;
-  images: string;
+  images: string[];
   specifications: {
     seatingCapacity: number;
     fuelType: string;
     mileage: string;
     hasAC: string;
-    availableColors: string;
+    availableColors: string[];
   };
 };

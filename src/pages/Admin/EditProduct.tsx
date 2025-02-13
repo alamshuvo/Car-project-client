@@ -1,8 +1,8 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import FormComponent from "@/components/Form/FormComponent";
-import { createProductSchema } from "@/schema/productValidationSchema";
-import { useGetSingleProductQuery } from "@/redux/features/admin/productManagement.api";
+import { updateProductSchema } from "@/schema/productValidationSchema";
+import { useGetSingleProductQuery, useUpdateProductMutation } from "@/redux/features/admin/productManagement.api";
 import FormInput from "@/components/Form/FormInput";
 import FormTextarea from "@/components/Form/FormTextarea";
 import FormSelect, { TOption } from "@/components/Form/FormSelect";
@@ -11,6 +11,8 @@ import ColorPickerInput from "@/components/Form/ColorPickerInput";
 import FormCheckbox from "@/components/Form/FormCheckbox";
 import { useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
+import { FieldValues, SubmitHandler } from "react-hook-form";
 
 const carCategories = [
     "Sedan", "Hatchback", "Coupe", "Convertible",
@@ -23,8 +25,9 @@ const carCategories = [
 const EditProduct = () => {
 
     const { id: productId } = useParams<{ id: string }>();
-    const { data, isLoading } = useGetSingleProductQuery({ productId });
-    console.log(data);
+    const { data: carData, isLoading } = useGetSingleProductQuery({ productId });
+
+    const [updateProduct] = useUpdateProductMutation();
 
     const carOptions: TOption[] = carCategories.map((category) => (
         {
@@ -33,14 +36,29 @@ const EditProduct = () => {
         }
     ))
 
+    const handleProductUpdateSubmit: SubmitHandler<FieldValues> = async (data) => {
+        console.log(data);
+        const toastId = toast.loading('Updating product...');
+        try {
+            const res = await updateProduct(data);
+            console.log(res);
+            toast.success('Successfully updated the product!', { id: toastId });
+        }
+        catch (err) {
+            console.log("Failed to update the product.", err);
+            toast.error('Something went wrong while updating the product!', { id: toastId });
+        }
+    }
+
 
     return isLoading ? (<div></div>) : (
         <FormComponent
-            onSubmit={() => { }}
-            resolver={zodResolver(createProductSchema)}
-            defaultValues={data}
+            onSubmit={handleProductUpdateSubmit}
+            resolver={zodResolver(updateProductSchema)}
+            defaultValues={carData}
         >
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+                <FormInput name="_id" type="hidden" />
                 <div className="w-full p-6 mx-auto space-y-4 bg-white rounded-lg shadow-lg">
                     <h2 className="text-xl font-semibold text-gray-800">Car Basic Details</h2 >
                     <FormInput name="name" type="text" label="Product Title" />
@@ -67,7 +85,7 @@ const EditProduct = () => {
                     </div>
                 </div>
             </div >
-            <Button className="w-full mt-4">Update Car</Button>
+            <Button type="submit" className="w-full mt-4">Update Car</Button>
         </FormComponent >
     );
 };

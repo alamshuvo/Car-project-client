@@ -19,7 +19,7 @@ const productManagementApi = baseApi.injectEndpoints({
       },
 
       transformResponse: (response: TResponseRedux<TProduct[]>) => {
-        console.log({response});
+        console.log({ response });
         if (response.success && response?.data) {
           return {
             data: response.data,
@@ -30,6 +30,7 @@ const productManagementApi = baseApi.injectEndpoints({
       },
       providesTags: ["product"]
     }),
+    // gets single product with ID
     getSingleProduct: builder.query({
       query: ({ productId }) => {
         return {
@@ -42,9 +43,12 @@ const productManagementApi = baseApi.injectEndpoints({
         if (response.success && response?.data) {
           return response.data;
         }
-        return response;
-      }
+        return response.data;
+      },
+      providesTags: ["single-product"]
     }),
+
+    // create product
     createProduct: builder.mutation({
       query: (product) => {
         return {
@@ -54,6 +58,19 @@ const productManagementApi = baseApi.injectEndpoints({
         };
       }
     }),
+
+    // update product
+    updateProduct: builder.mutation({
+      query: (updateData) => {
+        return {
+          url: `/products/${updateData._id}`,
+          method: "PATCH",
+          body: updateData
+        };
+      },
+      invalidatesTags: ["single-product"]
+    }),
+
     deleteProduct: builder.mutation({
       query: ({ productId }) => {
         return {
@@ -66,5 +83,10 @@ const productManagementApi = baseApi.injectEndpoints({
   })
 });
 
-export const { useGetAllProductsQuery, useGetSingleProductQuery, useCreateProductMutation, useDeleteProductMutation } =
-  productManagementApi;
+export const {
+  useGetAllProductsQuery,
+  useGetSingleProductQuery,
+  useCreateProductMutation,
+  useDeleteProductMutation,
+  useUpdateProductMutation
+} = productManagementApi;

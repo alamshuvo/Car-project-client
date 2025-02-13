@@ -1,15 +1,10 @@
+import CarouselComponent from '@/components/CarouselComponent/CarouselComponent';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { useGetSingleProductQuery } from '@/redux/features/admin/productManagement.api';
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 
-// Dummy data
-const product = {
-    name: 'Awesome Product',
-    images: ['/path-to-image1.jpg', '/path-to-image2.jpg'],
-    colorOptions: ['Red', 'Blue', 'Green'],
-    sizeOptions: ['Small', 'Medium', 'Large'],
-    stock: 20,
-    price: 49.99,
-};
 
 const reviews = [
     {
@@ -24,11 +19,6 @@ const reviews = [
     },
 ];
 
-const specifications = [
-    'Material: 100% Cotton',
-    'Dimensions: 10 x 8 x 4 inches',
-    'Weight: 2 kg',
-];
 
 const similarProducts = [
     {
@@ -53,50 +43,58 @@ const ProductDetails = () => {
 
     const handleIncrement = () => setQuantity(prev => prev + 1);
     const handleDecrement = () => setQuantity(prev => Math.max(prev - 1, 1));
+    const { id: productId } = useParams<{ id: string }>();
+    const { data: productData, isLoading } = useGetSingleProductQuery({ productId });
 
+    if (isLoading) return 'Loading...';
+    if (!productData) return 'Loading...';
     return (
         <div className="w-full bg-gray-50">
             {/* Product/Service Details */}
             <div className="flex gap-12 px-6 py-12 mx-auto ">
                 {/* Images Column */}
                 <div className="w-1/2">
-                    <div className="space-y-4">
-                        {product.images.map((image, index) => (
-                            <img key={index} src={image} alt={`Product Image ${index + 1}`} className="object-cover w-full h-auto rounded-lg" />
-                        ))}
-                    </div>
+                    <CarouselComponent bottomNavigation={true} carouselType='images' images={productData.images} />
                 </div>
 
                 {/* Information Column */}
                 <div className="w-1/2 space-y-6">
                     {/* Product/Service Name */}
-                    <h2 className="text-3xl font-semibold">{product.name}</h2>
+                    <h2 className="text-3xl font-semibold">{productData.name}</h2>
+
+
+
+                    {/* Specifications Section */}
+                    <div>
+                        <h3 className="mb-4 text-2xl font-semibold">Product Specifications</h3>
+                        <ul className="pl-5 space-y-3 list-disc">
+
+                            <li>Seating Capacity: {productData?.specifications?.seatingCapacity}</li>
+                            <li>Fuel Type: {productData?.specifications?.fuelType}</li>
+                            <li>Mileage: {productData?.specifications?.mileage}</li>
+                            <li>Air-conditioner:
+                                {productData?.specifications?.hasAC ? (
+                                    <Badge className="ml-2 bg-green-500">Yes</Badge>
+                                ) : (
+                                    <Badge className="ml-2 bg-red-500">No</Badge>
+                                )}
+                            </li>
+
+                        </ul>
+                    </div>
+
 
                     {/* Color, Size, Stock Quantity */}
                     <div className="space-y-3">
-                        <div>
-                            <span className="font-medium">Color:</span>
-                            <select className="p-2 ml-2 border rounded-md">
-                                {product.colorOptions.map((color, index) => (
-                                    <option key={index} value={color.toLowerCase()}>
-                                        {color}
-                                    </option>
-                                ))}
-                            </select>
+                        <span className="font-medium">Available Colors:</span>
+                        <div className='flex flex-wrap items-center space-x-2'>
+                            {productData?.specifications?.availableColors?.map((color: string, index: number) => (
+                                <Badge key={index} style={{ backgroundColor: color }} className="w-16 h-16 px-4 py-1 text-white rounded" />
+                            ))}
                         </div>
                         <div>
-                            <span className="font-medium">Size:</span>
-                            <select className="p-2 ml-2 border rounded-md">
-                                {product.sizeOptions.map((size, index) => (
-                                    <option key={index} value={size.toLowerCase()}>
-                                        {size}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
-                        <div>
-                            <span className="font-medium">Stock:</span>
-                            <span>{product.stock} items available</span>
+                            <span className="font-medium">Stock: </span>
+                            <span className='text-lg font-bold'>{productData.stock}</span> items available
                         </div>
                     </div>
 
@@ -115,14 +113,11 @@ const ProductDetails = () => {
                         </button>
                     </div>
 
+
+
                     {/* Add to Cart or Book Service Button */}
                     <Button variant="default" color="primary" className="w-full py-3">
                         Add to Cart
-                    </Button>
-
-                    {/* For Service */}
-                    <Button variant="outline" color="secondary" className="w-full py-3">
-                        Book Service
                     </Button>
                 </div>
             </div>
@@ -141,14 +136,14 @@ const ProductDetails = () => {
                 </div>
             </div>
 
-            {/* Specifications Section */}
+
+
+            {/* Description Section */}
             <div className="px-6 py-12 mx-auto ">
-                <h3 className="mb-4 text-2xl font-semibold">Product Specifications</h3>
-                <ul className="pl-5 space-y-3 list-disc">
-                    {specifications.map((spec, index) => (
-                        <li key={index}>{spec}</li>
-                    ))}
-                </ul>
+                <h3 className="mb-4 text-2xl font-semibold">Product Description</h3>
+                <p>
+                    {productData.description}
+                </p>
             </div>
 
             {/* Similar Products/Services */}

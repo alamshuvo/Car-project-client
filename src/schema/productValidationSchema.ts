@@ -19,3 +19,17 @@ export const createProductSchema = z.object({
   images: z.array(z.string()).optional(),
   specifications: productSpecificationsSchema
 });
+
+
+export const updateProductSchema = z.object({
+  _id: z.string(),
+  name: z.string().optional(),
+  brand: z.string().optional(),
+  price: z.number().min(1).optional(),
+  model: z.string().optional(),
+  stock: z.number().min(0).optional(),
+  description: z.string().optional(),
+  category: z.string().optional(),
+  images: z.array(z.string()).optional(),
+  specifications: productSpecificationsSchema.optional()
+});

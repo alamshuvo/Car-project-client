@@ -14,8 +14,9 @@ const FormInput = ({ type, name, label, readonly, placeholder }: TInput) => {
     return (
         <div style={{ marginBottom: '10px' }}>
             <Controller name={name} render={({ field, fieldState: { error } }) => <div>
-                {label && <Label htmlFor={name}>{label}</Label>}
+                {label && <Label className="" htmlFor={name}>{label}</Label>}
                 <Input
+                    className={`${label? 'mt-2': ''}`}
                     placeholder={placeholder}
                     readOnly={readonly}
                     type={type}
