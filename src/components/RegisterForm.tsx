@@ -13,6 +13,10 @@ import { FieldValues, SubmitHandler } from "react-hook-form"
 import FormInput from "./Form/FormInput"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { registerValidationSchema } from "@/schema/authValidationSchema"
+import { useRegisterMutation } from "@/redux/features/auth/authApi"
+import { toast } from "sonner"
+import { IRegisterResponse, TResponseRedux } from "@/types"
+import { useNavigate } from "react-router-dom"
 
 export function RegisterForm({
   className,
@@ -20,14 +24,29 @@ export function RegisterForm({
 }: React.ComponentPropsWithoutRef<"div">) {
 
   const defaultValues = {
+    name: '',
     email: '',
     password: '',
   }
+  const [register] = useRegisterMutation();
+  const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     console.log(data);
+    const toastId = toast.loading('Please wait while we are registering you...');
+    try {
+      const res = await register(data) as TResponseRedux<IRegisterResponse>;
+      if (res.data?.success) {
+        toast.success('Successfully registered your account!', { id: toastId });
+        navigate('/login');
+        return;
+      }
+      toast.error(res.error?.data.message || 'Something went wrong while registering!', { id: toastId })
+    }
+    catch {
+      toast.error('Something went wrong while registering!', { id: toastId })
+    }
   }
-
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>

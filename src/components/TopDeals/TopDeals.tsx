@@ -133,6 +133,9 @@ const productData: TUIProduct[] = dummyProducts.map(product => ({
 
 
 const TopDeals = () => {
+
+    // const products
+
     return (
         <div>
             <h2 className="font-bold text-left text-red-500 mt-28">Our Vehicle</h2>

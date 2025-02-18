@@ -15,10 +15,14 @@ import { Box, Home, Menu, PhoneCall } from "lucide-react";
 import { Button } from "../ui/button";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useAppDispatch, useAppSelector } from "@/redux/hook";
+import { logout, selectCurrentUser } from "@/redux/features/auth/authSlice";
 const NavBar = () => {
 
     const [open, setOpen] = useState(false);
-
+    const dispatch = useAppDispatch();
+    const user = useAppSelector(selectCurrentUser);
+    
     return (
         <div className="grid grid-cols-2 md:grid-cols-3 items-center justify-between h-[150px]">
             <div className="logo">
@@ -73,7 +77,11 @@ const NavBar = () => {
                         <PhoneCall />
                         (406) 555-0120
                     </div>
-                    <Button> Sign In</Button>
+                    <Button onClick={() => { if (user) {
+                        dispatch(logout())
+                    } }}>
+                        {user ? <a>Sign Out</a> : <a href="/login">Sign In</a>}
+                    </Button>
                 </div>
             </div>
         </div>
