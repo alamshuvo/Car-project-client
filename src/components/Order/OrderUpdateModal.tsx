@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/select"
 import { useUpdateOrderStatusMutation } from "@/redux/features/orders/orderApi"
 import { IOrderUpdateStatus, TOrderStatus, TResponseRedux } from "@/types"
-import { orderStatuses } from "@/utils/global.contants"
+import { orderStatuses } from "@/utils/global.constants"
 import { toUpperCaseFirstChar } from "@/utils/helperFunctions"
 import { useState } from "react"
 import { toast } from "sonner"

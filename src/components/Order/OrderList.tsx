@@ -16,14 +16,17 @@ import {
 import { Badge } from "../ui/badge";
 import { Skeleton } from "../ui/skeleton";
 import { useEffect, useState } from "react";
-import { useGetAllOrdersQuery } from "@/redux/features/orders/orderApi";
-import { TQueryParam } from "@/types";
+import { useGetAllOrdersQuery, useUpdateOrderStatusMutation } from "@/redux/features/orders/orderApi";
+import { IOrderUpdateStatus, TQueryParam, TResponseRedux } from "@/types";
 import { toUpperCaseFirstChar } from "@/utils/helperFunctions";
 import { Box } from "lucide-react";
 import { useAppSelector } from "@/redux/hook";
 import { selectCurrentUser } from "@/redux/features/auth/authSlice";
 import { OrderUpdateModal } from "./OrderUpdateModal";
-import { orderStatuses } from "@/utils/global.contants";
+import { orderStatuses } from "@/utils/global.constants";
+import { ConfirmModal } from "../ConfirmModal/ConfirmModal";
+import { Button } from "../ui/button";
+import { toast } from "sonner";
 const OrderList = () => {
     const [params, setParams] = useState<TQueryParam[]>([]);
     const [page, setPage] = useState(1);
@@ -34,6 +37,8 @@ const OrderList = () => {
     useEffect(() => {
         const newParams = [
             { name: "page", value: `${page}` },
+            { name: 'sortBy', value: 'createdAt'},
+            { name: 'sortOrder', value: 'desc'},
         ];
         if (status !== 'all') {
             newParams.push({ name: "status", value: status });
@@ -46,6 +51,27 @@ const OrderList = () => {
     const meta = data?.meta;
 
     const tabs = ['all', ...orderStatuses];
+    const [updateStatus] = useUpdateOrderStatusMutation();
+
+    const cancelOrder = async (orderId: string) => {
+        const toastId = toast.loading('Updating order status');
+        try {
+            const res = await updateStatus({
+                id: orderId,
+                status: 'cancelled',
+            }) as TResponseRedux<IOrderUpdateStatus>;
+            console.log(res);
+            if (res.data?.success) {
+                toast.success("Successfully cancelled the order!", { id: toastId });
+            } else {
+                toast.error(res.error?.data.message || "Some error occurred while canceling order!", { id: toastId })
+            }
+        } catch (err) {
+            console.log(err);
+            toast.success("Some error occurred while canceling order!", { id: toastId });
+        }
+    }
+
 
     return (
         <div className="w-11/12 mx-auto">
@@ -105,10 +131,19 @@ const OrderList = () => {
                                                         <span className="font-medium">Order Id: {order._id}</span>
                                                     </div>
                                                     <div>
-                                                        <Badge variant={order.status}>
+                                                        <Badge variant={order.status} className="mr-2">
                                                             {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
                                                         </Badge>
-                                                        {user?.role == 'admin' && <OrderUpdateModal orderId={order._id} currentStatus={order.status} />}
+                                                        {user?.role == 'admin' && order.status !== 'cancelled' && <OrderUpdateModal orderId={order._id} currentStatus={order.status} />}
+                                                        {user?.role == 'user' && order.status === 'pending' && <ConfirmModal
+                                                            title="Cancel Order?"
+                                                            description="Are you sure you want to cancel this order? This action is irreversible."
+                                                            confirmText="Yes"
+                                                            cancelText="No"
+                                                            onConfirm={() => cancelOrder(order._id)}
+                                                            triggerButton={<Button variant="destructive" className="h-6">Cancel Order</Button>}
+                                                        />
+}
                                                     </div>
                                                 </div>
                                                 <div className="space-y-4">
