@@ -11,18 +11,23 @@ import {
     SheetHeader,
     SheetTrigger,
 } from "@/components/ui/sheet"
-import { Box, Home, Menu, PhoneCall } from "lucide-react";
+import { Box, BoxIcon, Home, LogOut, Menu, PhoneCall, Settings, Shield, User2 } from "lucide-react";
 import { Button } from "../ui/button";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import { logout, selectCurrentUser } from "@/redux/features/auth/authSlice";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuTrigger } from "../ui/dropdown-menu";
+import { Avatar, AvatarFallback } from "../ui/avatar";
 const NavBar = () => {
 
     const [open, setOpen] = useState(false);
     const dispatch = useAppDispatch();
     const user = useAppSelector(selectCurrentUser);
-    
+    const handleLogout = () => {
+        dispatch(logout());
+    }
+
     return (
         <div className="grid grid-cols-2 md:grid-cols-3 items-center justify-between h-[150px]">
             <div className="logo">
@@ -77,12 +82,56 @@ const NavBar = () => {
                         <PhoneCall />
                         (406) 555-0120
                     </div>
-                    <Button onClick={() => { if (user) {
-                        dispatch(logout())
-                    } }}>
-                        {user ? <a>Sign Out</a> : <a href="/login">Sign In</a>}
-                    </Button>
+                    {user ? (
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button variant="ghost" className="relative w-8 h-8 rounded-full">
+                                    <Avatar className="w-8 h-8">
+                                        <AvatarFallback>
+                                            {user?.role === 'user' ? <User2 /> : <Shield />}
+                                        </AvatarFallback>
+                                    </Avatar>
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent className="w-56" align="end" forceMount>
+                                <DropdownMenuLabel className="font-normal">
+                                    <div className="flex flex-col space-y-1">
+                                        <p className="text-sm font-medium leading-none">{user?.name}</p>
+                                        <p className="text-xs leading-none text-muted-foreground">
+                                            {user?.email}
+                                        </p>
+                                    </div>
+                                </DropdownMenuLabel>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuGroup>
+                                    <a href={`/${user.role}`}><DropdownMenuItem className="cursor-pointer">
+                                        Dashboard
+                                        <DropdownMenuShortcut><Settings className="w-4 h-4" /></DropdownMenuShortcut>
+                                    </DropdownMenuItem>
+                                    </a>
+                                    {user.role === 'user' && (
+                                        <a href="/user/orders">
+                                            <DropdownMenuItem className="cursor-pointer">
+                                                Orders
+                                                <DropdownMenuShortcut><BoxIcon className="w-4 h-4" /></DropdownMenuShortcut>
+                                            </DropdownMenuItem>
+                                        </a>
+                                    )}
+                                </DropdownMenuGroup>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem onClick={handleLogout} className="cursor-pointer">
+                                    Log out
+                                    <DropdownMenuShortcut><LogOut className="w-4 h-4" /></DropdownMenuShortcut>
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                    ) : (
+                        <Button >
+                            <a href="/login">Sign In</a>
+                        </Button>
+                    )}
                 </div>
+
             </div>
         </div>
 

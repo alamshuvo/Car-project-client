@@ -10,18 +10,29 @@ const badgeVariants = cva(
       variant: {
         default:
           "border-transparent bg-primary text-primary-foreground shadow hover:bg-primary/80",
+        pending:
+          "border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80",
         secondary:
           "border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80",
         destructive:
           "border-transparent bg-destructive text-destructive-foreground shadow hover:bg-destructive/80",
         outline: "text-foreground",
+        processing:
+          "border-transparent bg-processing text-processing-foreground hover:bg-processing/80", // Add 'processing' variant
+        shipped:
+          "border-transparent bg-shipped text-shipped-foreground hover:bg-shipped/80", // Add 'shipped' variant
+        delivered:
+          "border-transparent bg-delivered text-delivered-foreground hover:bg-delivered/80", // Add 'delivered' variant
+        cancelled:
+          "border-transparent bg-cancelled text-cancelled-foreground hover:bg-cancelled/80", // Add 'cancelled' variant
       },
     },
     defaultVariants: {
       variant: "default",
     },
   }
-)
+);
+
 
 export interface BadgeProps
   extends React.HTMLAttributes<HTMLDivElement>,

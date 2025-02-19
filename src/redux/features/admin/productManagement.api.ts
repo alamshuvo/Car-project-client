@@ -1,5 +1,5 @@
 import baseApi from "@/redux/api/baseApi";
-import { TProduct, TQueryParam, TResponseRedux } from "@/types";
+import { IProduct, TQueryParam, TResponseRedux } from "@/types";
 
 const productManagementApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -18,7 +18,7 @@ const productManagementApi = baseApi.injectEndpoints({
         };
       },
 
-      transformResponse: (response: TResponseRedux<TProduct[]>) => {
+      transformResponse: (response: TResponseRedux<IProduct[]>) => {
         console.log({ response });
         if (response.success && response?.data) {
           return {
@@ -39,7 +39,7 @@ const productManagementApi = baseApi.injectEndpoints({
         };
       },
 
-      transformResponse: (response: TResponseRedux<TProduct>) => {
+      transformResponse: (response: TResponseRedux<IProduct>) => {
         if (response.success && response?.data) {
           return response.data;
         }

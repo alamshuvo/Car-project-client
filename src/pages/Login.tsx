@@ -12,7 +12,7 @@ const Login = () => {
     useEffect(() => {
         console.log(user);
         if (user && token) {
-            navigate("/");
+            navigate(`/${user.role}`);
         }
     }, [user, token, navigate]);
 

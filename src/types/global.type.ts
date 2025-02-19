@@ -17,7 +17,6 @@ export type TResponse<T> = {
   message: string;
   data?: T;
   error?: TError;
-  meta?: TMeta;
 };
 
 export type TResponseRedux<T> = TResponse<T> & BaseQueryApi;

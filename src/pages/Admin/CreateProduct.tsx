@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import FormComponent from "@/components/Form/FormComponent";
 import { createProductSchema } from "@/schema/productValidationSchema";
 import { toast } from "sonner";
-import { TProduct, TResponseRedux } from "@/types";
+import { IProduct, TResponseRedux } from "@/types";
 import { useCreateProductMutation } from "@/redux/features/admin/productManagement.api";
 import FormInput from "@/components/Form/FormInput";
 import FormTextarea from "@/components/Form/FormTextarea";
@@ -53,7 +53,7 @@ const CreateProduct = () => {
         const loadingToast = toast.loading('Creating new product...');
         try {
             console.log(data);
-            const res = await createProduct(data) as TResponseRedux<TProduct>;
+            const res = await createProduct(data) as TResponseRedux<IProduct>;
 
             if (res.error) {
                 toast.error(res.error?.data.message || 'Some error occurred while creating new product!', { id: loadingToast });

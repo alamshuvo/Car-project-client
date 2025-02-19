@@ -18,7 +18,7 @@ import { toUpperCaseFirstChar } from "@/utils/helperFunctions"
 import React from "react"
 import { Link, Outlet, useLocation } from "react-router-dom"
 
-export default function AdminLayout() {
+export default function DashboardLayout() {
 
     const location = useLocation(); // Get current route
     const pathSegments = location.pathname.split("/").filter(Boolean);

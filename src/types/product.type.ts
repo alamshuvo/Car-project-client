@@ -17,7 +17,7 @@ export type TUIProduct = {
   productProperties: TProductProperty[];
 };
 
-export type TProduct = {
+export interface IProduct {
   _id?: string;
   name: string;
   brand: string;
@@ -27,11 +27,13 @@ export type TProduct = {
   description: string;
   category: string;
   images: string[];
-  specifications: {
-    seatingCapacity: number;
-    fuelType: string;
-    mileage: string;
-    hasAC: string;
-    availableColors: string[];
-  };
-};
+  specifications: ISpecifications;
+}
+
+export interface ISpecifications {
+  seatingCapacity: number;
+  fuelType: string;
+  mileage: string;
+  hasAC: boolean;
+  availableColors: string[];
+}

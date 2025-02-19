@@ -18,15 +18,13 @@ import { toast } from "sonner"
 import { ILoginResponse, TResponseRedux } from "@/types"
 import { useAppDispatch } from "@/redux/hook"
 import { verifyToken } from "@/utils/verifyToken"
-import { setUser } from "@/redux/features/auth/authSlice"
-import { useNavigate } from "react-router-dom"
+import { setUser, TUser } from "@/redux/features/auth/authSlice"
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
-
-  const navigate = useNavigate();
+  
   const [login] = useLoginMutation();
   const dispatch = useAppDispatch();
 
@@ -37,13 +35,12 @@ export function LoginForm({
     try {
       const res = await login(data) as TResponseRedux<ILoginResponse>;
       if (res.data?.success) {
-        const user = verifyToken(res.data.data.token);
+        const user = verifyToken(res.data.data.token) as TUser;
         dispatch(setUser({
           user,
           token: res.data.data.token,
         }))
         toast.success("Login success.", { id: loadingId });
-        navigate('/');
         return;
       }
       toast.error(res.error?.data.message || "Something went wrong while logging you in.", { id: loadingId });

@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { Skeleton } from "@/components/ui/skeleton";
-import { TProduct } from "@/types";
+import { IProduct } from "@/types";
 
 
 const ViewProductDetails = () => {
@@ -16,7 +16,7 @@ const ViewProductDetails = () => {
     }
 
     console.log(data);
-    const productData = data as TProduct;
+    const productData = data as IProduct;
 
     return (
         <div className="container grid grid-cols-1 gap-6 px-4 py-6 mx-auto lg:grid-cols-2">

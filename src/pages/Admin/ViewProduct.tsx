@@ -31,7 +31,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { TProduct } from "@/types"
+import { IProduct } from "@/types"
 import { useState } from "react"
 import { useDeleteProductMutation, useGetAllProductsQuery } from "@/redux/features/admin/productManagement.api"
 import { Link } from "react-router-dom"
@@ -43,7 +43,7 @@ const ViewProduct = () => {
     const [deleteProduct] = useDeleteProductMutation();
 
 
-    const productData = response?.data as TProduct[] || [];
+    const productData = response?.data as IProduct[] || [];
 
     const [sorting, setSorting] = useState<SortingState>([])
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
@@ -67,7 +67,7 @@ const ViewProduct = () => {
     }
 
 
-    const columns: ColumnDef<TProduct>[] = [
+    const columns: ColumnDef<IProduct>[] = [
         {
             id: "select",
             header: ({ table }) => (

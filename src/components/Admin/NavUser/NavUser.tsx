@@ -6,13 +6,10 @@ import {
     ChevronsUpDown,
     CreditCard,
     LogOut,
-    Sparkles,
 } from "lucide-react"
 
 import {
     Avatar,
-    AvatarFallback,
-    AvatarImage,
 } from "@/components/ui/avatar"
 import {
     DropdownMenu,
@@ -29,6 +26,10 @@ import {
     SidebarMenuItem,
     useSidebar,
 } from "@/components/ui/sidebar"
+import { ReactNode } from "react"
+import { useAppDispatch } from "@/redux/hook"
+import { logout } from "@/redux/features/auth/authSlice"
+import { useNavigate } from "react-router-dom"
 
 export function NavUser({
     user,
@@ -36,10 +37,18 @@ export function NavUser({
     user: {
         name: string
         email: string
-        avatar: string
+        avatar: ReactNode
     }
 }) {
     const { isMobile } = useSidebar()
+    const navigate = useNavigate();
+    const dispatch = useAppDispatch();
+
+    const handleLogout = async () => {
+        await dispatch(logout());
+        navigate('/login');
+
+    }
 
     return (
         <SidebarMenu>
@@ -51,8 +60,7 @@ export function NavUser({
                             className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
                         >
                             <Avatar className="w-8 h-8 rounded-lg">
-                                <AvatarImage src={user.avatar} alt={user.name} />
-                                <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                                {user.avatar}
                             </Avatar>
                             <div className="grid flex-1 text-sm leading-tight text-left">
                                 <span className="font-semibold truncate">{user.name}</span>
@@ -70,8 +78,7 @@ export function NavUser({
                         <DropdownMenuLabel className="p-0 font-normal">
                             <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                                 <Avatar className="w-8 h-8 rounded-lg">
-                                    <AvatarImage src={user.avatar} alt={user.name} />
-                                    <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                                    {user.avatar}
                                 </Avatar>
                                 <div className="grid flex-1 text-sm leading-tight text-left">
                                     <span className="font-semibold truncate">{user.name}</span>
@@ -79,13 +86,6 @@ export function NavUser({
                                 </div>
                             </div>
                         </DropdownMenuLabel>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuGroup>
-                            <DropdownMenuItem>
-                                <Sparkles />
-                                Upgrade to Pro
-                            </DropdownMenuItem>
-                        </DropdownMenuGroup>
                         <DropdownMenuSeparator />
                         <DropdownMenuGroup>
                             <DropdownMenuItem>
@@ -102,7 +102,7 @@ export function NavUser({
                             </DropdownMenuItem>
                         </DropdownMenuGroup>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem>
+                        <DropdownMenuItem onClick={handleLogout}>
                             <LogOut />
                             Log out
                         </DropdownMenuItem>

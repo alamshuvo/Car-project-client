@@ -14,25 +14,39 @@ import { NavUser } from "../NavUser/NavUser"
 import { sidebarItemsGenerator } from "@/utils/sidebarItemsGenerator"
 import { adminPaths } from "@/routes/admin.routes"
 import Logo from "@/assets/logos/Logo"
-
-// This is sample data.
-const data = {
-    user: {
-        name: "Admin",
-        email: "m@example.com",
-        avatar: "/avatars/shadcn.jpg",
-    },
-    navMain: sidebarItemsGenerator(adminPaths),
-}
+import { useAppSelector } from "@/redux/hook"
+import { selectCurrentUser } from "@/redux/features/auth/authSlice"
+import { Shield, User } from "lucide-react"
+import { useNavigate } from "react-router-dom"
+import { userPaths } from "@/routes/user.routes"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+
+    const navigate = useNavigate();
+
+    const user = useAppSelector(selectCurrentUser);
+    if (!user) {
+        navigate('/login');
+        return;
+    }
+    const data = {
+        user: {
+            name: user.name,
+            email: user.email,
+            avatar: user.role === 'user' ? <User /> : <Shield />,
+        },
+        navMain: sidebarItemsGenerator(user.role === 'user' ? userPaths : adminPaths),
+    }
+
     return (
         <Sidebar collapsible="icon" {...props}>
             <SidebarHeader>
-                <Logo height={100} width={100} />
+                <a href="/">
+                    <Logo height={100} width={100} />
+                </a>
             </SidebarHeader>
             <SidebarContent>
-                <NavMain items={data.navMain} />
+                <NavMain role={user.role} items={data.navMain} />
             </SidebarContent>
             <SidebarFooter>
                 <NavUser user={data.user} />

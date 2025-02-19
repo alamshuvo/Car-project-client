@@ -3,8 +3,9 @@ import CreateProduct from "@/pages/Admin/CreateProduct";
 import EditProduct from "@/pages/Admin/EditProduct";
 import ViewProduct from "@/pages/Admin/ViewProduct";
 import ViewProductDetails from "@/pages/Admin/ViewProductDetails";
+import Orders from "@/pages/User/Orders";
 import { TRouteItemsPath } from "@/types";
-import { Box, LayoutDashboard } from "lucide-react";
+import { Box, Boxes, LayoutDashboard } from "lucide-react";
 import { Navigate } from "react-router-dom";
 
 
@@ -43,5 +44,11 @@ export const adminPaths: TRouteItemsPath[] = [
                 element: <EditProduct />
             }
         ],
+    },
+    {
+        icon: <Boxes />,
+        name: 'Orders',
+        path: 'order',
+        element: <Orders />
     },
 ]
