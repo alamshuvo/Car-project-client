@@ -3,7 +3,8 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { useGetSingleProductQuery } from '@/redux/features/admin/productManagement.api';
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'sonner';
 
 
 const reviews = [
@@ -39,12 +40,34 @@ const similarProducts = [
 ];
 
 const ProductDetails = () => {
-    const [quantity, setQuantity] = useState(1);
-
-    const handleIncrement = () => setQuantity(prev => prev + 1);
-    const handleDecrement = () => setQuantity(prev => Math.max(prev - 1, 1));
+    const navigate = useNavigate();
     const { id: productId } = useParams<{ id: string }>();
     const { data: productData, isLoading } = useGetSingleProductQuery({ productId });
+
+    const [quantity, setQuantity] = useState(1);
+    const [selectedColor, setSelectedColor] = useState(productData?.specifications?.availableColors?.[0]);
+
+    const handleDecrement = () => setQuantity(prev => Math.max(prev - 1, 1));
+    const handleIncrement = () => {
+        if (productData?.stock && productData?.stock > quantity) {
+            setQuantity(prev => prev + 1);
+        }
+    };
+
+    const handleCheckout = () => {
+        if (!selectedColor) {
+            toast.error('Please select an available color!');
+            return;
+        }
+        navigate('/checkout', {
+            state: {
+                productId: productId,
+                quantity: quantity,
+                selectedColor: selectedColor,
+                productData: productData,
+            }
+        });
+    }
 
     if (isLoading) return 'Loading...';
     if (!productData) return 'Loading...';
@@ -89,7 +112,13 @@ const ProductDetails = () => {
                         <span className="font-medium">Available Colors:</span>
                         <div className='flex flex-wrap items-center space-x-2'>
                             {productData?.specifications?.availableColors?.map((color: string, index: number) => (
-                                <Badge key={index} style={{ backgroundColor: color }} className="w-16 h-16 px-4 py-1 text-white rounded" />
+                                <button
+                                    key={index}
+                                    style={{ backgroundColor: color }}
+                                    className={`w-16 h-16 px-4 py-1 text-white rounded ${selectedColor === color ? 'border-2 border-blue-500' : ''}`}
+                                    onClick={() => setSelectedColor(color)}
+                                >
+                                </button>
                             ))}
                         </div>
                         <div>
@@ -102,12 +131,14 @@ const ProductDetails = () => {
                         {/* Quantity Control */}
                         <div className="flex items-center space-x-4">
                             <button
+                                disabled={productData?.stock === 0}
                                 className="px-4 py-2 bg-gray-200 border rounded-md"
                                 onClick={handleDecrement}>
                                 -
                             </button>
                             <span>{quantity}</span>
                             <button
+                                disabled={productData?.stock === 0}
                                 className="px-4 py-2 bg-gray-200 border rounded-md"
                                 onClick={handleIncrement}>
                                 +
@@ -120,9 +151,9 @@ const ProductDetails = () => {
 
 
 
-                    {/* Add to Cart or Book Service Button */}
-                    <Button variant="default" color="primary" className="w-full py-3">
-                        Add to Cart
+                    {/* Buy Now CTA */}
+                    <Button onClick={handleCheckout} disabled={productData?.stock === 0} variant="default" color="primary" className="w-full py-3">
+                        Buy Now
                     </Button>
                 </div>
             </div>
@@ -161,7 +192,7 @@ const ProductDetails = () => {
                             <h4 className="text-xl font-semibold">{product.name}</h4>
                             <p className="text-gray-500">Price: ${product.price}</p>
                             <Button variant="default" color="primary" className="w-full py-2 mt-4">
-                                Add to Cart
+                                View Details
                             </Button>
                         </div>
                     ))}

@@ -110,7 +110,7 @@ const NavBar = () => {
                                     </DropdownMenuItem>
                                     </a>
                                     {user.role === 'user' && (
-                                        <a href="/user/orders">
+                                        <a href="/user/order">
                                             <DropdownMenuItem className="cursor-pointer">
                                                 Orders
                                                 <DropdownMenuShortcut><BoxIcon className="w-4 h-4" /></DropdownMenuShortcut>

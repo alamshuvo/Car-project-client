@@ -58,8 +58,8 @@ const EditProduct = () => {
             defaultValues={carData}
         >
             <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-                <FormInput name="_id" type="hidden" />
                 <div className="w-full p-6 mx-auto space-y-4 bg-white rounded-lg shadow-lg">
+                    <FormInput name="_id" type="hidden" />
                     <h2 className="text-xl font-semibold text-gray-800">Car Basic Details</h2 >
                     <FormInput name="name" type="text" label="Product Title" />
                     <FormInput name="brand" type="text" label="Product Brand" />

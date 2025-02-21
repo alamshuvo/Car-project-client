@@ -1,6 +1,6 @@
 import { TMeta } from "./../../../types/global.type";
 import baseApi from "@/redux/api/baseApi";
-import { IOrderResponse, TQueryParam, TResponseRedux } from "@/types";
+import { IOrderData, IOrderResponse, TQueryParam, TResponseRedux } from "@/types";
 
 const orderApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -12,6 +12,12 @@ const orderApi = baseApi.injectEndpoints({
           method: "POST",
           body: orderData
         };
+      },
+      transformResponse: (response: TResponseRedux<IOrderData>) => {
+        if (response.success && response?.data) {
+          return response.data;
+        }
+        return response.data;
       }
     }),
 

@@ -18,6 +18,7 @@ import SingleProduct from "@/components/SingleProduct/SingleProduct";
 import { useGetAllProductsQuery } from "@/redux/features/admin/productManagement.api";
 import ProductListSkeleton from "@/components/ProductListSkeleton/ProductListSkeleton";
 import ProductFilterSection from "@/components/ProductFilterSection/ProductFilterSection";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const Products = () => {
     const [params, setParams] = useState<TQueryParam[]>([]);
@@ -72,9 +73,6 @@ const Products = () => {
         ])
     }
 
-    if (isLoading || isFetching) {
-        return <ProductListSkeleton />
-    }
     return (
         <div className="flex flex-col w-full">
             <h3 className="my-12 text-5xl font-bold text-center uppercase text-blue-950">
@@ -119,46 +117,61 @@ const Products = () => {
                 </Drawer>
 
                 {/* Products List */}
-                <div className="flex-1 p-4">
-                    <div className={`grid grid-cols-1 ${!productData.length ? '' :'gap-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4'}`}>
-                        {!productData.length && (
-                            <div className="flex flex-col items-center justify-center h-64 text-gray-500">
-                                <Box className="w-16 h-16 mb-4" />
-                                <p>No products available for the selected filters</p>
+                {
+                    isLoading || isFetching ?
+                        <ProductListSkeleton /> :
+                        (
+                            <div className="flex-1 p-4">
+                                <div className={`grid grid-cols-1 ${!productData.length ? '' : 'gap-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4'}`}>
+                                    {!productData.length && (
+                                        <div className="flex flex-col items-center justify-center h-64 text-gray-500">
+                                            <Box className="w-16 h-16 mb-4" />
+                                            <p>No products available for the selected filters</p>
+                                        </div>
+                                    )}
+                                    {productData.map((product, idx) => (
+                                        <SingleProduct product={product} key={idx} />
+                                    ))}
+                                </div>
                             </div>
-                        )}
-                        {productData.map((product, idx) => (
-                            <SingleProduct product={product} key={idx} />
-                        ))}
-                    </div>
-                </div>
+                        )
+                }
 
             </div>
             {/* Pagination */}
-            <Pagination className="my-8">
-                <PaginationContent>
-                    <PaginationItem>
-                        <PaginationPrevious href="#" />
-                    </PaginationItem>
-                    <PaginationItem>
-                        <PaginationLink href="#">1</PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem>
-                        <PaginationLink href="#" isActive>
-                            2
-                        </PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem>
-                        <PaginationLink href="#">3</PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem>
-                        <PaginationEllipsis />
-                    </PaginationItem>
-                    <PaginationItem>
-                        <PaginationNext href="#" />
-                    </PaginationItem>
-                </PaginationContent>
-            </Pagination>
+            {isLoading || isFetching ? (
+                <div className="flex justify-center my-8">
+                    <div className="flex gap-2">
+                        {Array.from({ length: 5 }).map((_, idx) => (
+                            <Skeleton key={idx} className="w-8 h-8 rounded" />
+                        ))}
+                    </div>
+                </div>) : (
+                <Pagination className="my-8">
+                    <PaginationContent>
+                        <PaginationItem>
+                            <PaginationPrevious href="#" />
+                        </PaginationItem>
+                        <PaginationItem>
+                            <PaginationLink href="#">1</PaginationLink>
+                        </PaginationItem>
+                        <PaginationItem>
+                            <PaginationLink href="#" isActive>
+                                2
+                            </PaginationLink>
+                        </PaginationItem>
+                        <PaginationItem>
+                            <PaginationLink href="#">3</PaginationLink>
+                        </PaginationItem>
+                        <PaginationItem>
+                            <PaginationEllipsis />
+                        </PaginationItem>
+                        <PaginationItem>
+                            <PaginationNext href="#" />
+                        </PaginationItem>
+                    </PaginationContent>
+                </Pagination>
+            )}
         </div>
     );
 };

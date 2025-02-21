@@ -49,7 +49,7 @@ const SingleProduct = ({ product }: ISingleProduct) => {
                     </div>
                     <div className="flex items-center justify-between">
                         <Link to={`/product-details/${product._id}`}>
-                            <Button className="px-6 py-5"> Add to<ShoppingCart />  </Button>
+                            <Button className="px-6 py-5"> Buy Now<ShoppingCart />  </Button>
                         </Link>
                         <Link to={`/product-details/${product._id}`}>
                             <Button variant='outline' className="px-6 py-5">View</Button>

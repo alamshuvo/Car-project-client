@@ -26,3 +26,16 @@ export type TQueryParam = {
   name: string;
   value: string;
 }
+
+
+export interface IDashboardStatResponse {
+  success: boolean;
+  statusCode: number;
+  message: string;
+  data: IStats;
+}
+
+export interface IStats {
+  totalOrders: number;
+  totalSpent: number;
+}

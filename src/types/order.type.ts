@@ -10,6 +10,7 @@ export type TOrderStatus = "pending" | "processing" | "shipped" | "delivered" | 
 
 export interface IOrderData {
   _id: string;
+  orderId: string;
   userId: string;
   products: IOrderProduct[];
   totalPrice: number;
@@ -33,4 +34,11 @@ export interface IOrderUpdateStatus {
   statusCode: number;
   message: string;
   data: IOrderProduct;
+}
+
+export interface IPaymentInitResponse {
+  success: boolean;
+  statusCode: number;
+  message: string;
+  data: string;
 }
