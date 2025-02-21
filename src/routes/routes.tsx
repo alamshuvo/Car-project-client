@@ -13,6 +13,7 @@ import Register from "@/pages/Register";
 import {userPaths} from "./user.routes";
 import ProtectedRoute from "@/layout/ProtectedRoute";
 import PaymentConfirmation from "@/pages/User/PaymentConfirmation.tsx";
+import About from "@/pages/About";
 
 const router = createBrowserRouter([
     {
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
             {
                 path: 'cart',
                 element: <Cart/>,
+            },
+            {
+                path: 'about',
+                element: <About/>,
             },
             {
                 path: 'checkout',

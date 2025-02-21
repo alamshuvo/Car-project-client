@@ -16,6 +16,7 @@ export type TResponse<T> = {
   success: boolean;
   message: string;
   data?: T;
+  meta?: TMeta;
   error?: TError;
 };
 

@@ -69,8 +69,6 @@ const NavBar = () => {
                                 <Link to={'/'} className="block mr-4">Home</Link>
                                 <Link to={'/products'} className="block mr-4">Products</Link>
                                 <Link to={'/about'} className="block mr-4">About</Link>
-                                <Link to={'/vehicle'} className="block mr-4">Vehicle</Link>
-                                <Link to={'/faq'} className="block mr-4">FAQ</Link>
                             </div>
                         </NavigationMenuItem>
                     </NavigationMenuList>

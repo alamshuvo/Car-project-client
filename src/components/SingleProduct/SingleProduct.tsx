@@ -7,13 +7,13 @@ import { ShoppingCart } from "lucide-react";
 
 interface ISingleProduct {
     product: TUIProduct,
+    forCarousel: boolean,
 }
-const SingleProduct = ({ product }: ISingleProduct) => {
-    console.log({singleProduct: product});
+const SingleProduct = ({ product, forCarousel }: ISingleProduct) => {
     return (
         <Card className="relative transition-all duration-300 bg-gray-100 cursor-pointer hover:bg-white hover:shadow-lg">
             <p className="absolute right-0 p-2 m-2 text-xl font-bold text-white rounded-md bg-primary">$ {product.price}</p>
-            <CardContent className="p-2">
+            <CardContent className={`p-2 ${forCarousel ? 'sm:flex justify-center items-center block' : ''}`}>
                 <img src={product.imageURL} className="h-[200px] rounded-xl mix-blend-multiply" alt="" />
                 <div className="p-2 pt-0">
                     <h3 className="mt-3 text-lg font-bold text-blue-800 uppercase">

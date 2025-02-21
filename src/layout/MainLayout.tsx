@@ -5,7 +5,7 @@ import { Outlet } from 'react-router-dom';
 const MainLayout = () => {
     return (
         <>
-            <div className='flex justify-center min-h-screen'>
+            <div className='flex justify-center min-h-screen bg-gray-50'>
                 <div className='w-11/12 md:w-10/12 max-w-screen-2xl'>
                     <NavBar />
                     <div className='flex justify-center'>

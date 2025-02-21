@@ -47,6 +47,26 @@ const productManagementApi = baseApi.injectEndpoints({
       },
       providesTags: ["single-product"]
     }),
+    // get trending products
+    getTrendingProducts: builder.query({
+      query: () => {
+        return {
+          url: "/products/trending-products",
+          method: "GET"
+        };
+      },
+
+      transformResponse: (response: TResponseRedux<IProduct[]>) => {
+        if (response.success && response?.data) {
+          return {
+            data: response.data
+          };
+        }
+        return {
+          data: []
+        };
+      }
+    }),
 
     // create product
     createProduct: builder.mutation({
@@ -84,6 +104,7 @@ const productManagementApi = baseApi.injectEndpoints({
 });
 
 export const {
+  useGetTrendingProductsQuery,
   useGetAllProductsQuery,
   useGetSingleProductQuery,
   useCreateProductMutation,

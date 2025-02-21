@@ -1,7 +1,17 @@
+import { TMeta } from "./global.type";
+
 export type TProductProperty = {
   icon: React.ReactNode;
   title: string;
 };
+
+export interface IProductResponse {
+  success: boolean;
+  statusCode: number;
+  message: string;
+  data: IProduct[];
+  meta: TMeta;
+}
 
 export type TUIProduct = {
   _id?: string;
