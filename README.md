@@ -1,50 +1,139 @@
-# React + TypeScript + Vite
+# 🚗 Car Valley
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![Car Valley Banner](https://carstore-frontend.vercel.app/assets/car_valley_logo_cropped-D6VjFXdR.png)
 
-Currently, two official plugins are available:
+Car Valley is a modern web application for car sales and management, built with React, Redux (State Manager), TypeScript, and Vite. It provides a seamless experience for browsing, purchasing and managing vehicles and users.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🌟 Live Demo
 
-## Expanding the ESLint configuration
+[Visit Car Valley](https://carstore-frontend.vercel.app/)
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## ✨ Features
 
-- Configure the top-level `parserOptions` property like this:
+- 🔐 Secure Authentication System
+- 🚙 Advanced Car Search & Filtering
+- 💳 Secure Payment Integration
+- 📱 Responsive Design
+- 🛡️ Admin Dashboard
+- 📊 Sales Analytics
+- ⭐ User Reviews & Ratings
+- 🔍 Detailed Vehicle Information
+- 🎨 Modern UI with Tailwind CSS
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## 🛠️ Tech Stack
+
+- **Frontend Framework:** React 18
+- **Build Tool:** Vite
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS
+- **UI Components:** Radix UI
+- **Form Handling:** React Hook Form
+- **Validation:** Zod
+- **State Management:** Redux Toolkit
+- **Routing:** React Router DOM
+- **Animations:** Framer Motion
+- **Package Manager:** Bun
+- **Component Library:** Shadcn/ui
+
+## 📋 Prerequisites
+
+Before you begin, ensure you have installed:
+
+- [Bun](https://bun.sh/) (Latest version)
+- Node.js (v18 or higher)
+
+## 🚀 Getting Started
+
+1. **Clone the repository**
+
+   ```bash
+   git clone https://github.com/SMTamim/ph-a4-express-ecommerce-client car_valley
+   cd car-valley
+   ```
+
+2. **Install Bun (if not installed)**
+
+   ```bash
+   curl -fsSL https://bun.sh/install | bash
+   ```
+
+3. **Install dependencies**
+
+   ```bash
+   bun install
+   ```
+
+4. **Start development server**
+
+   ```bash
+   bun run dev
+   ```
+
+5 . **Build for production**
+
+```bash
+bun run build:prod
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## 📂 Project Structure
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
 ```
+car-valley/
+├── src/
+    ├── app
+    ├── assets
+    ├── components
+    ├── hooks
+    ├── layout
+    ├── lib
+    ├── pages
+    ├── redux
+    ├── routes
+    ├── schema
+    ├── types
+    └── utils
+├── public/
+```
+
+## 🔧 Configuration
+
+The project uses various configuration files:
+
+- `vite.config.ts` - Vite configuration
+- `tailwind.config.js` - Tailwind CSS configuration
+- `tsconfig.json` - TypeScript configuration
+- `.eslint.config.js` - ESLint rules
+
+## 📦 Available Scripts
+
+- `bun run dev` - Start development server
+- `bun run build:prod` - Build for production
+- `bun run preview` - Preview production build
+- `bun run lint` - Run ESLint
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📜 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 👥 Team
+
+- [S M Tamim Mahmud](https://smtamim.dev)
+
+## 🙏 Acknowledgments
+
+- [Shadcn UI](https://ui.shadcn.com/) for the beautiful components
+- [Radix UI](https://www.radix-ui.com/) for accessible primitives
+- [Tailwind CSS](https://tailwindcss.com/) for the utility-first CSS framework
+- [Vercel](https://vercel.com/) for deployment
+
+---
+
+<p align="center">Made with ❤️</p>
