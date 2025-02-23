@@ -19,14 +19,9 @@ const Checkout = () => {
   const selectedColor = state.selectedColor;
   const productData = state.productData as IProduct;
   const [paymentMethod, setPaymentMethod] = useState("credit");
-  const [orderPlaced, setOrderPlaced] = useState(false);
 
   const [initiatePayment] = useInitiatePaymentMutation();
 
-  const handlePlaceOrder = () => {
-    // Order confirmation logic
-    setOrderPlaced(true);
-  };
 
   const handleBillingSubmit: SubmitHandler<FieldValues> = async (data) => {
     const toastId = toast.loading("Placing your order...");
@@ -48,7 +43,6 @@ const Checkout = () => {
         const paymentResponse = await initiatePayment(
           orderResponse.data?.orderId,
         );
-        // console.log(paymentResponse)
         window.location.href = (paymentResponse.data ?? "") as string;
       }
     } catch {
@@ -137,7 +131,7 @@ const Checkout = () => {
               <div className="flex justify-between">
                 <span>{productData.name}</span>
                 <span>x{quantity}</span>
-                <span>${productData.price * quantity}</span>
+                <span>${productData.price}</span>
               </div>
               <div className="flex justify-between mt-4 text-xl font-semibold">
                 <span>Total</span>
@@ -151,18 +145,10 @@ const Checkout = () => {
             <Button
               color="primary"
               className="w-full py-3"
-              onClick={handlePlaceOrder}
             >
-              {orderPlaced ? "Order Placed!" : "Confirm Order"}
+              Confirm Order
             </Button>
           </div>
-
-          {/* Order Confirmation Message */}
-          {orderPlaced && (
-            <div className="mt-8 font-semibold text-center text-green-500">
-              Your order has been successfully placed!
-            </div>
-          )}
         </FormComponent>
       </div>
     </div>

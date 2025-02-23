@@ -1,6 +1,7 @@
 import AdminDashboard from "@/pages/Admin/AdminDashboard";
 import CreateProduct from "@/pages/Admin/CreateProduct";
 import EditProduct from "@/pages/Admin/EditProduct";
+import ViewProduct from "@/pages/Admin/ViewProduct";
 import ViewProductDetails from "@/pages/Admin/ViewProductDetails";
 import ViewUsers from "@/pages/Admin/ViewUsers";
 import UpdateProfile from "@/pages/Common/UpdateProfile";
@@ -33,7 +34,7 @@ export const adminPaths: TRouteItemsPath[] = [
       {
         name: "View Products",
         path: "view-products",
-        element: <ViewUsers />,
+        element: <ViewProduct />,
       },
       {
         path: "product-details/:id",
