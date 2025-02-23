@@ -22,12 +22,10 @@ export type TResponse<T> = {
 
 export type TResponseRedux<T> = TResponse<T> & BaseQueryApi;
 
-
 export type TQueryParam = {
   name: string;
   value: string;
-}
-
+};
 
 export interface IDashboardStatResponse {
   success: boolean;
@@ -39,4 +37,7 @@ export interface IDashboardStatResponse {
 export interface IStats {
   totalOrders: number;
   totalSpent: number;
+  pendingOrders?: number;
+  deliveredOrders?: number;
+  processingOrders: number;
 }

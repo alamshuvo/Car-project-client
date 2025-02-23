@@ -1,3 +1,4 @@
+import { TResponseRedux } from "@/types";
 import baseApi from "../../api/baseApi";
 
 const authApi = baseApi.injectEndpoints({
@@ -7,19 +8,37 @@ const authApi = baseApi.injectEndpoints({
       query: (userCredentials) => ({
         url: "/auth/login",
         method: "POST",
-        body: userCredentials
-      })
+        body: userCredentials,
+      }),
     }),
+
+    //* passowrd update route
+    updatePassword: builder.mutation({
+      query: (userCredentials: {
+        password: string;
+        currentPassword: string;
+      }) => ({
+        url: "/auth/update-password",
+        method: "PATCH",
+        body: userCredentials,
+      }),
+    }),
+
     //* register route
     register: builder.mutation({
       query: (userData) => {
         return {
           url: "/auth/register",
           method: "POST",
-          body: userData
+          body: userData,
         };
-      }
-    })
-  })
+      },
+      transformResponse: (response: TResponseRedux<null>) => response,
+    }),
+  }),
 });
-export const { useLoginMutation, useRegisterMutation } = authApi;
+export const {
+  useLoginMutation,
+  useRegisterMutation,
+  useUpdatePasswordMutation,
+} = authApi;
