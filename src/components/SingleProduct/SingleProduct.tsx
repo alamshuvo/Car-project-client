@@ -25,7 +25,7 @@ const SingleProduct = ({ product, forCarousel }: ISingleProduct) => {
         />
         <div className="p-2 pt-0">
           <h3 className="mt-3 text-lg font-bold text-blue-800 uppercase">
-            {product.title}
+            <Link to={`/product-details/${product._id}`}>{product.title}</Link>
           </h3>
           <div className="flex items-center mb-3">
             <StarRatings

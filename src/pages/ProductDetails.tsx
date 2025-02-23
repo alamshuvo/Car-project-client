@@ -1,29 +1,15 @@
 import CarouselComponent from "@/components/CarouselComponent/CarouselComponent";
+import ProductLoader from "@/components/ProductLoader/ProductLoader";
 import { ReviewSection } from "@/components/ReviewSection/ReviewSection";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { useGetSingleProductQuery } from "@/redux/features/admin/productManagement.api";
+import {
+  useGetSimilarProductQuery,
+  useGetSingleProductQuery,
+} from "@/redux/features/admin/productManagement.api";
 import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
-
-const similarProducts = [
-  {
-    name: "Product 1",
-    price: 29.99,
-    image: "/path-to-similar-product1.jpg",
-  },
-  {
-    name: "Product 2",
-    price: 39.99,
-    image: "/path-to-similar-product2.jpg",
-  },
-  {
-    name: "Product 3",
-    price: 59.99,
-    image: "/path-to-similar-product3.jpg",
-  },
-];
 
 const ProductDetails = () => {
   const navigate = useNavigate();
@@ -31,6 +17,12 @@ const ProductDetails = () => {
   const { data: productResponse, isLoading } = useGetSingleProductQuery({
     productId,
   });
+
+  const { data: similarProducts } = useGetSimilarProductQuery({
+    productId,
+  });
+  console.log(similarProducts);
+
   const hasPurchased = productResponse?.hasPurchased;
   const productData = productResponse?.result;
   const [quantity, setQuantity] = useState(1);
@@ -61,8 +53,10 @@ const ProductDetails = () => {
     });
   };
 
-  if (isLoading) return "Loading...";
-  if (!productData) return "Loading...";
+  if (isLoading || !productData)
+    if (isLoading) {
+      return <ProductLoader />;
+    }
   return (
     <div className="w-full rounded-xl bg-gray-50">
       {/* Product/Service Details */}
@@ -72,14 +66,14 @@ const ProductDetails = () => {
           <CarouselComponent
             bottomNavigation={true}
             carouselType="images"
-            images={productData.images}
+            images={productData!.images}
           />
         </div>
 
         {/* Information Column */}
         <div className="w-1/2 space-y-6">
           {/* Product/Service Name */}
-          <h2 className="text-3xl font-semibold">{productData.name}</h2>
+          <h2 className="text-3xl font-semibold">{productData!.name}</h2>
 
           {/* Specifications Section */}
           <div>
@@ -121,7 +115,7 @@ const ProductDetails = () => {
             <div>
               <span className="font-medium">Stock: </span>
               <span className="text-lg font-bold">
-                {productData.stock}
+                {productData!.stock}
               </span>{" "}
               items available
             </div>
@@ -146,7 +140,7 @@ const ProductDetails = () => {
                 +
               </button>
             </div>
-            <p className="pr-2 text-3xl font-bold">${productData.price}</p>
+            <p className="pr-2 text-3xl font-bold">${productData!.price}</p>
           </div>
 
           {/* Buy Now CTA */}
@@ -167,31 +161,36 @@ const ProductDetails = () => {
       {/* Description Section */}
       <div className="px-6 py-12 mx-auto ">
         <h3 className="mb-4 text-2xl font-semibold">Product Description</h3>
-        <p>{productData.description}</p>
+        <p>{productData!.description}</p>
       </div>
 
       {/* Similar Products/Services */}
       <div className="px-6 py-12 mx-auto ">
         <h3 className="mb-4 text-2xl font-semibold">Similar Products</h3>
         <div className="grid grid-cols-3 gap-6">
-          {similarProducts.map((product, index) => (
-            <div key={index} className="p-4 border rounded-lg">
-              <img
-                src={product.image}
-                alt={`Similar Product ${index + 1}`}
-                className="object-cover w-full h-48 mb-4 rounded-lg"
-              />
-              <h4 className="text-xl font-semibold">{product.name}</h4>
-              <p className="text-gray-500">Price: ${product.price}</p>
-              <Button
-                variant="default"
-                color="primary"
-                className="w-full py-2 mt-4"
-              >
-                View Details
-              </Button>
-            </div>
-          ))}
+          {similarProducts &&
+            similarProducts.map((product, index) => (
+              <div key={index} className="p-4 border rounded-lg">
+                {product.image && (
+                  <img
+                    src={product.image[0] ?? ""}
+                    alt={`Similar Product ${index + 1}`}
+                    className="object-cover w-full h-48 mb-4 rounded-lg"
+                  />
+                )}
+                <h4 className="text-xl font-semibold">{product.name}</h4>
+                <p className="text-gray-500">Price: ${product.price}</p>
+                <Link to={`/product-details/${product._id}`}>
+                  <Button
+                    variant="default"
+                    color="primary"
+                    className="w-full py-2 mt-4"
+                  >
+                    View Details
+                  </Button>
+                </Link>
+              </div>
+            ))}
         </div>
       </div>
     </div>

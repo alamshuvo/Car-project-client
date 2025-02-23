@@ -1,6 +1,7 @@
 import baseApi from "@/redux/api/baseApi";
 import {
   IProduct,
+  ISimilarProduct,
   ISingleProductResponse,
   TQueryParam,
   TResponseRedux,
@@ -95,6 +96,23 @@ const productManagementApi = baseApi.injectEndpoints({
       },
     }),
 
+    // gets similar product with ID
+    getSimilarProduct: builder.query({
+      query: ({ productId }) => {
+        return {
+          url: `/products/similar-products/${productId}`,
+          method: "GET",
+        };
+      },
+
+      transformResponse: (response: TResponseRedux<ISimilarProduct[]>) => {
+        if (response.success && response?.data) {
+          return response.data;
+        }
+        return response.data;
+      },
+    }),
+
     // create product
     createProduct: builder.mutation({
       query: (product) => {
@@ -138,4 +156,5 @@ export const {
   useCreateProductMutation,
   useDeleteProductMutation,
   useUpdateProductMutation,
+  useGetSimilarProductQuery,
 } = productManagementApi;
