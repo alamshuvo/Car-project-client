@@ -9,9 +9,7 @@ const Home = () => {
 
 
     const { data } = useGetTrendingProductsQuery([]);
-    console.log({ data });
     const images = data?.data.map((prod) => prod.images[0]);
-    console.log(images);
 
     return (
         <div className="w-full">

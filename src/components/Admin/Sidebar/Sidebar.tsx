@@ -17,7 +17,7 @@ import Logo from "@/assets/logos/Logo"
 import { useAppSelector } from "@/redux/hook"
 import { selectCurrentUser } from "@/redux/features/auth/authSlice"
 import { Shield, User } from "lucide-react"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { userPaths } from "@/routes/user.routes"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -41,9 +41,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     return (
         <Sidebar collapsible="icon" {...props}>
             <SidebarHeader>
-                <a href="/">
+                <Link to="/">
                     <Logo height={100} width={100} />
-                </a>
+                </Link>
             </SidebarHeader>
             <SidebarContent>
                 <NavMain role={user.role} items={data.navMain} />

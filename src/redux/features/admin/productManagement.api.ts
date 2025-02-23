@@ -47,6 +47,28 @@ const productManagementApi = baseApi.injectEndpoints({
       },
       providesTags: ["single-product"]
     }),
+
+    // get top products
+    getTopProducts: builder.query({
+      query: () => {
+        return {
+          url: "/products/top-products",
+          method: "GET"
+        };
+      },
+
+      transformResponse: (response: TResponseRedux<IProduct[]>) => {
+        if (response.success && response?.data) {
+          return {
+            data: response.data
+          };
+        }
+        return {
+          data: []
+        };
+      }
+    }),
+
     // get trending products
     getTrendingProducts: builder.query({
       query: () => {
@@ -105,6 +127,7 @@ const productManagementApi = baseApi.injectEndpoints({
 
 export const {
   useGetTrendingProductsQuery,
+  useGetTopProductsQuery,
   useGetAllProductsQuery,
   useGetSingleProductQuery,
   useCreateProductMutation,

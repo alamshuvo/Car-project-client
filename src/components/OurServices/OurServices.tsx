@@ -1,33 +1,34 @@
 import { TService } from "@/types";
 import SingleService from "./SingleService";
-import Service1 from '../../assets/images/service_1.png';
-import Service2 from '../../assets/images/service_2.png';
-
+import CarSales from '../../assets/images/car_sales.jpg';
+import CarRepair from '../../assets/images/car_repair.jpg';
+import CarWash from '../../assets/images/car_wash.jpg';
+import CarInsurance from '../../assets/images/car_insurance.jpg';
 
 const servicesData: TService[] = [
     {
-        imageURL: Service1,
-        description: `Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quis explicabo id soluta vero earum dolores esse recusandae vitae magnam omnis totam est neque tenetur impedit quisquam, aut velit suscipit ullam.`,
-        seeMoreLink: '',
-        title: 'Online Booking'
+        imageURL: CarSales,
+        title: "New & Used Car Sales",
+        description: `Explore our wide range of brand-new and certified pre-owned vehicles. We offer competitive pricing and flexible financing options to help you drive away in your dream car.`,
+        seeMoreLink: '/services/car-sales'
     },
     {
-        imageURL: Service2,
-        description: `Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quis explicabo id soluta vero earum dolores esse recusandae vitae magnam omnis totam est neque tenetur impedit quisquam, aut velit suscipit ullam.`,
-        seeMoreLink: '',
-        title: 'Online Booking'
+        imageURL: CarRepair,
+        title: "Expert Car Repair",
+        description: `Our certified mechanics provide top-quality repair services, from engine diagnostics to brake repairs. We ensure your car runs smoothly and safely on the road.`,
+        seeMoreLink: '/services/car-repair'
     },
     {
-        imageURL: Service2,
-        description: `Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quis explicabo id soluta vero earum dolores esse recusandae vitae magnam omnis totam est neque tenetur impedit quisquam, aut velit suscipit ullam.`,
-        seeMoreLink: '',
-        title: 'Online Booking'
+        imageURL: CarWash,
+        title: "Premium Car Wash",
+        description: `Keep your car looking brand new with our professional car wash services. Choose from exterior cleaning, interior detailing, and full-service packages.`,
+        seeMoreLink: '/services/car-wash'
     },
     {
-        imageURL: Service2,
-        description: `Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quis explicabo id soluta vero earum dolores esse recusandae vitae magnam omnis totam est neque tenetur impedit quisquam, aut velit suscipit ullam.`,
-        seeMoreLink: '',
-        title: 'Online Booking'
+        imageURL: CarInsurance,
+        title: "Insurance & Registration",
+        description: `Get hassle-free car insurance and registration services under one roof. Our experts will guide you through the paperwork for a smooth and quick process.`,
+        seeMoreLink: '/services/insurance-registration'
     },
 ];
 
@@ -40,7 +41,7 @@ const OurServices = () => {
                 Our best service for you
             </h3>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
-                {servicesData.map((service, idx) => <SingleService service={service}  key={idx} />)}
+                {servicesData.map((service, idx) => <SingleService service={service} key={idx} />)}
             </div>
         </div>
     );

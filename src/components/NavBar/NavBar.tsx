@@ -102,19 +102,17 @@ const NavBar = () => {
                                 </DropdownMenuLabel>
                                 <DropdownMenuSeparator />
                                 <DropdownMenuGroup>
-                                    <a href={`/${user.role}`}><DropdownMenuItem className="cursor-pointer">
+                                    <Link to={`/${user.role}`}><DropdownMenuItem className="cursor-pointer">
                                         Dashboard
                                         <DropdownMenuShortcut><Settings className="w-4 h-4" /></DropdownMenuShortcut>
                                     </DropdownMenuItem>
-                                    </a>
-                                    {user.role === 'user' && (
-                                        <a href="/user/order">
-                                            <DropdownMenuItem className="cursor-pointer">
-                                                Orders
-                                                <DropdownMenuShortcut><BoxIcon className="w-4 h-4" /></DropdownMenuShortcut>
-                                            </DropdownMenuItem>
-                                        </a>
-                                    )}
+                                    </Link>
+                                    <Link to={`/${user.role}/order`}>
+                                        <DropdownMenuItem className="cursor-pointer">
+                                            Orders
+                                            <DropdownMenuShortcut><BoxIcon className="w-4 h-4" /></DropdownMenuShortcut>
+                                        </DropdownMenuItem>
+                                    </Link>
                                 </DropdownMenuGroup>
                                 <DropdownMenuSeparator />
                                 <DropdownMenuItem onClick={handleLogout} className="cursor-pointer">
@@ -125,7 +123,7 @@ const NavBar = () => {
                         </DropdownMenu>
                     ) : (
                         <Button >
-                            <a href="/login">Sign In</a>
+                            <Link to="/login">Sign In</Link>
                         </Button>
                     )}
                 </div>

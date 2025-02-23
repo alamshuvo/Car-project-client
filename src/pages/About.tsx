@@ -10,7 +10,7 @@ const About = () => {
                         About CarValley
                     </h1>
                     <p className="mt-4 text-xl text-gray-600">
-                        Providing top-notch car repair and services since 1999
+                        Providing top-notch car repair and services since 2025
                     </p>
                 </div>
 
@@ -39,7 +39,7 @@ const About = () => {
                         </p>
                     </div>
                     <div className="md:w-1/2">
-                        <Logo width={500}/>
+                        <Logo width={500} />
                     </div>
                 </div>
 
@@ -72,7 +72,7 @@ const About = () => {
                 </div>
 
                 {/* Why Choose Us Section */}
-                <div className="py-12 mb-16 bg-blue-100">
+                <div className="py-12 mb-16 bg-gray-100 rounded-lg">
                     <div className="max-w-3xl mx-auto text-center">
                         <h2 className="mb-4 text-3xl font-semibold text-gray-700">
                             Why Choose Us?
@@ -107,9 +107,12 @@ const About = () => {
                     <p className="mb-4 text-lg text-gray-600">
                         Have questions? Need to book an appointment? Contact us today!
                     </p>
-                    <button className="px-8 py-3 text-lg text-white bg-blue-600 rounded-lg">
-                        Contact Us
-                    </button>
+
+                    <a href="/contact">
+                        <button className="px-8 py-3 text-lg text-white bg-blue-600 rounded-lg">
+                            Contact Us
+                        </button>
+                    </a>
                 </div>
             </div>
         </div>

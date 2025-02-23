@@ -1,5 +1,5 @@
 import Logo from "@/assets/logos/Logo";
-import { Mail, Facebook, Twitter, Instagram, CreditCard } from "lucide-react";
+import { Mail, Facebook, Twitter, Instagram, CreditCard, Banknote } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
@@ -19,10 +19,9 @@ const Footer = () => {
                 <div className="p-4 aspect-video rounded-xl bg-muted/50">
                     <h3 className="mb-4 text-xl font-semibold">Quick Links</h3>
                     <ul className="space-y-2 text-blue-950">
-                        <li><a href="/" className="hover:text-blue-600">Home</a></li>
-                        <li><a href="/about" className="hover:text-blue-600">About Us</a></li>
-                        <li><a href="/services" className="hover:text-blue-600">Services</a></li>
-                        <li><a href="/contact" className="hover:text-blue-600">Contact</a></li>
+                        <li><Link to="/" className="hover:text-blue-600">Home</Link></li>
+                        <li><Link to="/about" className="hover:text-blue-600">About Us</Link></li>
+                        <li><Link to="/contact" className="hover:text-blue-600">Contact</Link></li>
                     </ul>
                 </div>
 
@@ -61,8 +60,7 @@ const Footer = () => {
                         <h3 className="text-xl font-semibold">Payment Methods</h3>
                         <div className="flex space-x-4">
                             <CreditCard size={24} />
-                            <CreditCard size={24} />
-                            <CreditCard size={24} />
+                            <Banknote size={24} />
                         </div>
                     </div>
                 </div>

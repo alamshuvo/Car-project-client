@@ -16,7 +16,7 @@ import { registerValidationSchema } from "@/schema/authValidationSchema"
 import { useRegisterMutation } from "@/redux/features/auth/authApi"
 import { toast } from "sonner"
 import { IRegisterResponse, TResponseRedux } from "@/types"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 export function RegisterForm({
   className,
@@ -101,9 +101,9 @@ export function RegisterForm({
             </div>
             <div className="mt-4 text-sm text-center">
               Already have an account?{" "}
-              <a href="/login" className="underline underline-offset-4">
+              <Link to="/login" className="underline underline-offset-4">
                 Login
-              </a>
+              </Link>
             </div>
           </FormComponent>
         </CardContent>

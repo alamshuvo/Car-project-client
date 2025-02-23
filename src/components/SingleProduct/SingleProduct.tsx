@@ -7,7 +7,7 @@ import { ShoppingCart } from "lucide-react";
 
 interface ISingleProduct {
     product: TUIProduct,
-    forCarousel: boolean,
+    forCarousel?: boolean,
 }
 const SingleProduct = ({ product, forCarousel }: ISingleProduct) => {
     return (

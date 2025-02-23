@@ -38,13 +38,13 @@ const UserDashboard = () => {
                     </div>
                     <div>
                         <h2 className="text-lg font-semibold text-gray-700">Total Orders</h2>
-                        <p className="text-2xl font-bold text-gray-900">
+                        <div className="text-2xl font-bold text-gray-900">
                             {isLoading ? (
                                 <Skeleton className="h-6 w-44" />
                             ) : (
                                 data?.totalOrders
                             )}
-                        </p>
+                        </div>
                     </div>
                 </div>
             </div>

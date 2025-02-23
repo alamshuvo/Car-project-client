@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/sidebar"
 import { TSidebarItem } from "@/types"
 import { toUpperCaseFirstChar } from "@/utils/helperFunctions"
+import { Link } from "react-router-dom"
 
 export function NavMain({
     items,
@@ -34,10 +35,10 @@ export function NavMain({
 
                 <SidebarMenuSubItem >
                     <SidebarMenuButton asChild tooltip={'Visit Car Valley'}>
-                        <a className="flex" href={`/`}>
+                        <Link className="flex" to={`/`}>
                             <HomeIcon className="w-4 h-4" />
                             Home
-                        </a>
+                        </Link>
                     </SidebarMenuButton>
                 </SidebarMenuSubItem>
                 {items.map((item) => {
@@ -63,9 +64,9 @@ export function NavMain({
                                             {item.items?.map((subItem) => subItem && (
                                                 <SidebarMenuSubItem key={subItem.title}>
                                                     <SidebarMenuSubButton asChild isActive={subItem.isActive}>
-                                                        <a href={`/${role}/${subItem.url}`}>
+                                                        <Link to={`/${role}/${subItem.url}`}>
                                                             <span>{subItem.title}</span>
-                                                        </a>
+                                                        </Link>
                                                     </SidebarMenuSubButton>
                                                 </SidebarMenuSubItem>
                                             ))}
@@ -79,9 +80,9 @@ export function NavMain({
                             <SidebarMenuSubItem key={item?.title}>
                                 <SidebarMenuButton isActive={item?.isActive} tooltip={item?.title}>
                                     {item?.icon}
-                                    <a href={`/${role}/${item?.url}`}>
+                                    <Link to={`/${role}/${item?.url}`}>
                                         <span>{item?.title}</span>
-                                    </a>
+                                    </Link>
                                 </SidebarMenuButton>
                             </SidebarMenuSubItem>
                         );
