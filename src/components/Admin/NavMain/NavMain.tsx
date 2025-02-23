@@ -1,7 +1,5 @@
 "use client";
-
 import { ChevronRight, HomeIcon } from "lucide-react";
-
 import {
   Collapsible,
   CollapsibleContent,
@@ -14,8 +12,8 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarMenuSub,
-  SidebarMenuSubButton,
   SidebarMenuSubItem,
+  SidebarMenuSubButton,
 } from "@/components/ui/sidebar";
 import { TSidebarItem } from "@/types";
 import { toUpperCaseFirstChar } from "@/utils/helperFunctions";
@@ -34,7 +32,7 @@ export function NavMain({
         <h2 className="text-xl">{toUpperCaseFirstChar(role)} Control</h2>
       </SidebarGroupLabel>
       <SidebarMenu>
-        <SidebarMenuSubItem>
+        <SidebarMenuSubItem key="home">
           <SidebarMenuButton asChild tooltip={"Visit Car Valley"}>
             <Link className="flex" to={`/`}>
               <HomeIcon className="w-4 h-4" />
@@ -42,11 +40,11 @@ export function NavMain({
             </Link>
           </SidebarMenuButton>
         </SidebarMenuSubItem>
-        {items.map((item) => {
+        {items.map((item, idx) => {
           if (item?.items) {
             return (
               <Collapsible
-                key={item.title}
+                key={`collapsible-${item.title}-${idx}`}
                 asChild
                 defaultOpen={item.isActive}
                 className="group/collapsible"
@@ -63,41 +61,46 @@ export function NavMain({
                   </CollapsibleTrigger>
                   <CollapsibleContent>
                     <SidebarMenuSub>
-                      {item.items?.map(
-                        (subItem) =>
-                          subItem && (
-                            <Link to={`/${role}/${subItem.url}`}>
-                              <SidebarMenuSubItem key={subItem.title}>
-                                <SidebarMenuSubButton
-                                  asChild
-                                  isActive={subItem.isActive}
-                                >
-                                  <span>{subItem.title}</span>
-                                </SidebarMenuSubButton>
-                              </SidebarMenuSubItem>
-                            </Link>
-                          ),
+                      {item.items?.map((subItem, subIdx) =>
+                        subItem ? (
+                          <Link
+                            key={`subitem-${subItem.title}-${subIdx}`}
+                            to={`/${role}/${subItem.url}`}
+                          >
+                            <SidebarMenuSubItem>
+                              <SidebarMenuSubButton
+                                asChild
+                                isActive={subItem.isActive}
+                              >
+                                <span>{subItem.title}</span>
+                              </SidebarMenuSubButton>
+                            </SidebarMenuSubItem>
+                          </Link>
+                        ) : null,
                       )}
                     </SidebarMenuSub>
                   </CollapsibleContent>
                 </SidebarMenuItem>
               </Collapsible>
             );
-          } else {
-            return (
-              <Link to={`/${role}/${item?.url}`}>
-                <SidebarMenuSubItem key={item?.title}>
-                  <SidebarMenuButton
-                    isActive={item?.isActive}
-                    tooltip={item?.title}
-                  >
-                    {item?.icon}
-                    <span>{item?.title}</span>
-                  </SidebarMenuButton>
-                </SidebarMenuSubItem>
-              </Link>
-            );
           }
+
+          return (
+            <Link
+              key={`item-${item?.title}-${idx}`}
+              to={`/${role}/${item?.url}`}
+            >
+              <SidebarMenuSubItem>
+                <SidebarMenuButton
+                  isActive={item?.isActive}
+                  tooltip={item?.title}
+                >
+                  {item?.icon}
+                  <span>{item?.title}</span>
+                </SidebarMenuButton>
+              </SidebarMenuSubItem>
+            </Link>
+          );
         })}
       </SidebarMenu>
     </SidebarGroup>

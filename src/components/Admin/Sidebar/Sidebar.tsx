@@ -9,7 +9,7 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar";
-import { NavMain } from "../AdminNav/AdminNav";
+import { NavMain } from "../NavMain/NavMain";
 import { NavUser } from "../NavUser/NavUser";
 import { sidebarItemsGenerator } from "@/utils/sidebarItemsGenerator";
 import { adminPaths } from "@/routes/admin.routes";

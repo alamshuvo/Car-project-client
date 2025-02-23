@@ -12,8 +12,11 @@ import {
 import { toast } from "sonner";
 import { logout, setUser } from "../features/auth/authSlice";
 
+const BACKEND_URL = "https://carstore-with-payment-gateway.vercel.app";
+// const BACKEND_URL = "http://localhost:5000";
+
 const baseQuery = fetchBaseQuery({
-  baseUrl: "https://carstore-with-payment-gateway.vercel.app/api",
+  baseUrl: `${BACKEND_URL}/api`,
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
@@ -37,13 +40,10 @@ const baseQueryWithRefreshToken: BaseQueryFn<
   if (result.error?.status === 401) {
     //* send refresh token
     // console.log("sending refresh token");
-    const res = await fetch(
-      "https://carstore-with-payment-gateway.vercel.app/api/auth/refresh-token",
-      {
-        method: "POST",
-        credentials: "include",
-      },
-    );
+    const res = await fetch(`${BACKEND_URL}/api/auth/refresh-token`, {
+      method: "POST",
+      credentials: "include",
+    });
     const data = await res.json();
     if (data?.data?.accessToken) {
       const user = (api.getState() as RootState).auth.user;
@@ -65,7 +65,7 @@ const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: baseQueryWithRefreshToken,
   endpoints: () => ({}),
-  tagTypes: ["product", "single-product", "order"],
+  tagTypes: ["product", "single-product", "order", "users"],
 });
 
 export default baseApi;

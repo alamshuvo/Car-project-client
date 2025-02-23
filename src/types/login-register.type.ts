@@ -1,3 +1,5 @@
+import { TMeta } from "./global.type";
+
 export interface IRegisterResponse {
   success: boolean;
   statusCode: number;
@@ -18,4 +20,20 @@ export interface ILoginResponse {
   data: {
     token: string;
   };
+}
+
+export interface IUsersResponse {
+  users: IUser;
+  meta: TMeta;
+}
+
+export interface IUser {
+  _id: string;
+  name: string;
+  email: string;
+  role: string;
+  isBlocked: boolean;
+  isDeleted: boolean;
+  createdAt: string;
+  updatedAt: string;
 }
