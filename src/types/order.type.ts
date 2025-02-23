@@ -6,7 +6,12 @@ export interface IOrderResponse {
   meta: TMeta;
 }
 
-export type TOrderStatus = "pending" | "processing" | "shipped" | "delivered" | "cancelled";
+export type TOrderStatus =
+  | "pending"
+  | "processing"
+  | "shipped"
+  | "delivered"
+  | "cancelled";
 
 export interface IOrderData {
   _id: string;
@@ -41,13 +46,6 @@ export interface IPaymentInitResponse {
   statusCode: number;
   message: string;
   data: string;
-}
-
-export interface IPaymentVerificationResponse {
-  success: boolean;
-  statusCode: number;
-  message: string;
-  data: IPaymentVerification;
 }
 
 export interface IPaymentVerification {

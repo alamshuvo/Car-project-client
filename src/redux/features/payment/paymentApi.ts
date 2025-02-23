@@ -1,5 +1,9 @@
 import baseApi from "@/redux/api/baseApi";
-import { IPaymentInitResponse, IPaymentVerificationResponse, TResponseRedux } from "@/types";
+import {
+  IPaymentInitResponse,
+  IPaymentVerification,
+  TResponseRedux,
+} from "@/types";
 
 const paymentApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -9,7 +13,7 @@ const paymentApi = baseApi.injectEndpoints({
         return {
           url: `/payments/create`,
           method: "POST",
-          body: { orderId }
+          body: { orderId },
         };
       },
       transformResponse: (response: TResponseRedux<IPaymentInitResponse>) => {
@@ -17,7 +21,7 @@ const paymentApi = baseApi.injectEndpoints({
           return response.data;
         }
         return response.data;
-      }
+      },
     }),
 
     //* verify payment
@@ -25,17 +29,17 @@ const paymentApi = baseApi.injectEndpoints({
       query: (orderId) => {
         return {
           url: `/payments/verify?order_id=${orderId}`,
-          method: "GET"
+          method: "GET",
         };
       },
-      transformResponse: (response: TResponseRedux<IPaymentVerificationResponse>) => {
+      transformResponse: (response: TResponseRedux<IPaymentVerification>) => {
         if (response.success && response?.data) {
           return response.data;
         }
-        return response.data;
-      }
-    })
-  })
+        return undefined;
+      },
+    }),
+  }),
 });
 
 export const { useInitiatePaymentMutation, useVerifyPaymentQuery } = paymentApi;

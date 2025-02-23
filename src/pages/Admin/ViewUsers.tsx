@@ -42,7 +42,7 @@ import {
 
 const ViewUsers = () => {
   const [params] = useState([]);
-  const { data: response, isLoading, refetch } = useGetAllUsersQuery(params);
+  const { data: response, isLoading } = useGetAllUsersQuery(params);
   // const [deleteProduct] = useDeleteProductMutation();
   const [unblockUser] = useUnblockUserMutation();
   const [blockUser] = useBlockUserMutation();
