@@ -1,7 +1,6 @@
 import baseApi from "@/redux/api/baseApi";
 import {
   IMultiReviewResponse,
-  IReview,
   IReviewResponse,
   TQueryParam,
   TResponseRedux,

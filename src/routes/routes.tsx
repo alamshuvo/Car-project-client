@@ -15,11 +15,17 @@ import ProtectedRoute from "@/layout/ProtectedRoute";
 import PaymentConfirmation from "@/pages/User/PaymentConfirmation.tsx";
 import About from "@/pages/About";
 import Contact from "@/pages/Contact";
+import ScrollToTop from "@/components/ScrollToTop/ScrollToTop";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: (
+      <>
+        <ScrollToTop />
+        <App />
+      </>
+    ),
     children: [
       {
         index: true,
