@@ -25,6 +25,7 @@ import { orderStatuses } from "@/utils/global.constants";
 import { ConfirmModal } from "../ConfirmModal/ConfirmModal";
 import { Button } from "../ui/button";
 import { toast } from "sonner";
+import { Link } from "react-router-dom";
 const OrderList = () => {
   const [params, setParams] = useState<TQueryParam[]>([]);
   const [page, setPage] = useState(1);
@@ -215,16 +216,22 @@ const OrderList = () => {
                       <div className="space-y-4">
                         {order.products.map((item) => (
                           <div key={item._id} className="flex gap-4">
-                            <div className="w-16 h-16 overflow-hidden rounded">
-                              <img
-                                src={item.product.images[0]}
-                                alt={item.product.name}
-                                className="object-cover w-full h-full"
-                              />
-                            </div>
+                            <Link to={`/product-details/${item.product._id}`}>
+                              <div className="w-16 h-16 overflow-hidden rounded">
+                                <img
+                                  src={item.product.images[0]}
+                                  alt={item.product.name}
+                                  className="object-cover w-full h-full"
+                                />
+                              </div>
+                            </Link>
                             <div className="flex-1">
                               <h3 className="mb-1 font-medium line-clamp-2">
-                                {item.product.name}
+                                <Link
+                                  to={`/product-details/${item.product._id}`}
+                                >
+                                  {item.product.name}
+                                </Link>
                               </h3>
                               <div className="text-sm text-gray-500">
                                 Color: {item.color}

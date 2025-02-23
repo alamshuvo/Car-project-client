@@ -1,5 +1,10 @@
 import baseApi from "@/redux/api/baseApi";
-import { IProduct, TQueryParam, TResponseRedux } from "@/types";
+import {
+  IProduct,
+  ISingleProductResponse,
+  TQueryParam,
+  TResponseRedux,
+} from "@/types";
 
 const productManagementApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -14,7 +19,7 @@ const productManagementApi = baseApi.injectEndpoints({
         return {
           url: "/products",
           method: "GET",
-          params: params
+          params: params,
         };
       },
 
@@ -23,29 +28,29 @@ const productManagementApi = baseApi.injectEndpoints({
         if (response.success && response?.data) {
           return {
             data: response.data,
-            meta: response.meta
+            meta: response.meta,
           };
         }
         return response;
       },
-      providesTags: ["product"]
+      providesTags: ["product"],
     }),
     // gets single product with ID
     getSingleProduct: builder.query({
       query: ({ productId }) => {
         return {
           url: `/products/${productId}`,
-          method: "GET"
+          method: "GET",
         };
       },
 
-      transformResponse: (response: TResponseRedux<IProduct>) => {
+      transformResponse: (response: TResponseRedux<ISingleProductResponse>) => {
         if (response.success && response?.data) {
           return response.data;
         }
         return response.data;
       },
-      providesTags: ["single-product"]
+      providesTags: ["single-product"],
     }),
 
     // get top products
@@ -53,20 +58,20 @@ const productManagementApi = baseApi.injectEndpoints({
       query: () => {
         return {
           url: "/products/top-products",
-          method: "GET"
+          method: "GET",
         };
       },
 
       transformResponse: (response: TResponseRedux<IProduct[]>) => {
         if (response.success && response?.data) {
           return {
-            data: response.data
+            data: response.data,
           };
         }
         return {
-          data: []
+          data: [],
         };
-      }
+      },
     }),
 
     // get trending products
@@ -74,20 +79,20 @@ const productManagementApi = baseApi.injectEndpoints({
       query: () => {
         return {
           url: "/products/trending-products",
-          method: "GET"
+          method: "GET",
         };
       },
 
       transformResponse: (response: TResponseRedux<IProduct[]>) => {
         if (response.success && response?.data) {
           return {
-            data: response.data
+            data: response.data,
           };
         }
         return {
-          data: []
+          data: [],
         };
-      }
+      },
     }),
 
     // create product
@@ -96,9 +101,9 @@ const productManagementApi = baseApi.injectEndpoints({
         return {
           url: "/products",
           method: "POST",
-          body: product
+          body: product,
         };
-      }
+      },
     }),
 
     // update product
@@ -107,22 +112,22 @@ const productManagementApi = baseApi.injectEndpoints({
         return {
           url: `/products/${updateData._id}`,
           method: "PATCH",
-          body: updateData
+          body: updateData,
         };
       },
-      invalidatesTags: ["single-product"]
+      invalidatesTags: ["single-product"],
     }),
 
     deleteProduct: builder.mutation({
       query: ({ productId }) => {
         return {
           url: `/products/${productId}`,
-          method: "DELETE"
+          method: "DELETE",
         };
       },
-      invalidatesTags: ["product"]
-    })
-  })
+      invalidatesTags: ["product"],
+    }),
+  }),
 });
 
 export const {
@@ -132,5 +137,5 @@ export const {
   useGetSingleProductQuery,
   useCreateProductMutation,
   useDeleteProductMutation,
-  useUpdateProductMutation
+  useUpdateProductMutation,
 } = productManagementApi;

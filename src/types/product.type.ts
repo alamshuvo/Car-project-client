@@ -27,6 +27,11 @@ export type TUIProduct = {
   productProperties: TProductProperty[];
 };
 
+export interface ISingleProductResponse {
+  result: IProduct;
+  hasPurchased: boolean;
+}
+
 export interface IProduct {
   _id?: string;
   name: string;
@@ -38,6 +43,8 @@ export interface IProduct {
   category: string;
   images: string[];
   specifications: ISpecifications;
+  totalReviews?: number;
+  averageRating?: number;
 }
 
 export interface ISpecifications {
