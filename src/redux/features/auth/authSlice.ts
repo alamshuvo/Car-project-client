@@ -7,7 +7,7 @@ export type TUser = {
   role: string;
   iat: number;
   exp: number;
-}
+};
 
 type TAuthState = {
   user: null | TUser;
@@ -16,7 +16,7 @@ type TAuthState = {
 
 const initialState: TAuthState = {
   user: null,
-  token: null
+  token: null,
 };
 
 const authSlice = createSlice({
@@ -25,16 +25,16 @@ const authSlice = createSlice({
   reducers: {
     setUser: (state, action) => {
       const { user, token } = action.payload;
-      console.log({user});
+      // console.log({user});
       state.user = user;
       state.token = token;
     },
     logout: (state) => {
-      console.log('here');
+      // console.log('here');
       state.user = null;
       state.token = null;
-    }
-  }
+    },
+  },
 });
 
 export const { setUser, logout } = authSlice.actions;

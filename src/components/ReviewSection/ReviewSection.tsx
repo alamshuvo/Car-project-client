@@ -42,7 +42,7 @@ export const ReviewSection = ({
     { name: "productId", value: `${productId}` },
   ]);
   if (!isLoading) {
-    console.log(reviewsData);
+    // console.log(reviewsData);
   }
   const [createReview] = useCreateReviewMutation();
 

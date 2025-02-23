@@ -4,14 +4,14 @@ const billingAddressApi = baseApi.injectEndpoints({
     //* Get single billing address of a user
     getBillingAddress: builder.query({
       query: () => {
-        console.log(baseApi.endpoints);
+        // console.log(baseApi.endpoints);
         return {
           url: `/billing-address/`,
-          method: "GET"
+          method: "GET",
         };
       },
-    })
-  })
+    }),
+  }),
 });
 
 export const { useGetBillingAddressQuery } = billingAddressApi;

@@ -61,7 +61,7 @@ const OrderList = () => {
         id: orderId,
         status: "cancelled",
       })) as TResponseRedux<IOrderUpdateStatus>;
-      console.log(res);
+      // console.log(res);
       if (res.data?.success) {
         toast.success("Successfully cancelled the order!", { id: toastId });
       } else {

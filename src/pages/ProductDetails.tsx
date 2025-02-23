@@ -21,7 +21,7 @@ const ProductDetails = () => {
   const { data: similarProducts } = useGetSimilarProductQuery({
     productId,
   });
-  console.log(similarProducts);
+  // console.log(similarProducts);
 
   const hasPurchased = productResponse?.hasPurchased;
   const productData = productResponse?.result;

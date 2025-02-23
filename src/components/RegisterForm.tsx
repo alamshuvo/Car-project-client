@@ -1,52 +1,55 @@
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Label } from "@/components/ui/label"
-import FormComponent from "./Form/FormComponent"
-import { FieldValues, SubmitHandler } from "react-hook-form"
-import FormInput from "./Form/FormInput"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { registerValidationSchema } from "@/schema/authValidationSchema"
-import { useRegisterMutation } from "@/redux/features/auth/authApi"
-import { toast } from "sonner"
-import { IRegisterResponse, TResponseRedux } from "@/types"
-import { Link, useNavigate } from "react-router-dom"
+} from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import FormComponent from "./Form/FormComponent";
+import { FieldValues, SubmitHandler } from "react-hook-form";
+import FormInput from "./Form/FormInput";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { registerValidationSchema } from "@/schema/authValidationSchema";
+import { useRegisterMutation } from "@/redux/features/auth/authApi";
+import { toast } from "sonner";
+import { IRegisterResponse, TResponseRedux } from "@/types";
+import { Link, useNavigate } from "react-router-dom";
 
 export function RegisterForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
-
   const defaultValues = {
-    name: '',
-    email: '',
-    password: '',
-  }
+    name: "",
+    email: "",
+    password: "",
+  };
   const [register] = useRegisterMutation();
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    console.log(data);
-    const toastId = toast.loading('Please wait while we are registering you...');
+    // console.log(data);
+    const toastId = toast.loading(
+      "Please wait while we are registering you...",
+    );
     try {
-      const res = await register(data) as TResponseRedux<IRegisterResponse>;
+      const res = (await register(data)) as TResponseRedux<IRegisterResponse>;
       if (res.data?.success) {
-        toast.success('Successfully registered your account!', { id: toastId });
-        navigate('/login');
+        toast.success("Successfully registered your account!", { id: toastId });
+        navigate("/login");
         return;
       }
-      toast.error(res.error?.data.message || 'Something went wrong while registering!', { id: toastId })
+      toast.error(
+        res.error?.data.message || "Something went wrong while registering!",
+        { id: toastId },
+      );
+    } catch {
+      toast.error("Something went wrong while registering!", { id: toastId });
     }
-    catch {
-      toast.error('Something went wrong while registering!', { id: toastId })
-    }
-  }
+  };
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
@@ -60,18 +63,12 @@ export function RegisterForm({
           <FormComponent
             onSubmit={onSubmit}
             resolver={zodResolver(registerValidationSchema)}
-            defaultValues={defaultValues}>
-
-
+            defaultValues={defaultValues}
+          >
             <div className="flex flex-col gap-6">
-
               <div className="grid gap-2">
                 <Label htmlFor="email">Name</Label>
-                <FormInput
-                  name="name"
-                  type="text"
-                  placeholder="john doe"
-                />
+                <FormInput name="name" type="text" placeholder="john doe" />
               </div>
 
               <div className="grid gap-2">
@@ -109,5 +106,5 @@ export function RegisterForm({
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }
