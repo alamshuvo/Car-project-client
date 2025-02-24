@@ -24,7 +24,6 @@ const Products = () => {
   const { data, isLoading, isFetching } = useGetAllProductsQuery(params);
   let productData: TUIProduct[] = [];
   const meta = data?.meta;
-  console.log(meta);
   if (data?.data) {
     const responseData = data?.data;
     productData = responseData.map((product) => ({
