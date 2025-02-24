@@ -1,3 +1,4 @@
+import OrderDetails from "@/components/Order/OrderDetails";
 import AdminDashboard from "@/pages/Admin/AdminDashboard";
 import CreateProduct from "@/pages/Admin/CreateProduct";
 import EditProduct from "@/pages/Admin/EditProduct";
@@ -59,17 +60,22 @@ export const adminPaths: TRouteItemsPath[] = [
         path: "user-details/:id",
         element: <ViewProductDetails />,
       },
-      {
-        path: "product-edit/:id",
-        element: <EditProduct />,
-      },
     ],
   },
   {
     icon: <Boxes />,
-    name: "Orders",
-    path: "order",
-    element: <Orders />,
+    name: "Orders Management",
+    children: [
+      {
+        name: "Orders",
+        path: "order",
+        element: <Orders />,
+      },
+      {
+        path: 'order-details/:id',
+        element: <OrderDetails/>
+      }
+    ]
   },
   {
     path: "update-profile",

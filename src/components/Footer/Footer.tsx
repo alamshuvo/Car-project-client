@@ -45,9 +45,9 @@ const Footer = () => {
             </div>
 
             {/* Full-width Section */}
-            <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min p-4">
+            <div className="flex-1 p-4 rounded-xl bg-muted/50 md:min-h-min">
                 {/* Social Media & Payment Methods */}
-                <div className="flex flex-col items-center justify-between md:flex-row">
+                <div className="flex flex-row items-center justify-between">
                     <div className="space-y-4">
                         <h3 className="text-xl font-semibold">Follow Us</h3>
                         <div className="flex space-x-4">
@@ -58,7 +58,7 @@ const Footer = () => {
                     </div>
                     <div className="space-y-4">
                         <h3 className="text-xl font-semibold">Payment Methods</h3>
-                        <div className="flex space-x-4">
+                        <div className="flex justify-end space-x-4">
                             <CreditCard size={24} />
                             <Banknote size={24} />
                         </div>

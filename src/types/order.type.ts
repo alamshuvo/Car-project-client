@@ -6,12 +6,7 @@ export interface IOrderResponse {
   meta: TMeta;
 }
 
-export type TOrderStatus =
-  | "pending"
-  | "processing"
-  | "shipped"
-  | "delivered"
-  | "cancelled";
+export type TOrderStatus = "pending" | "processing" | "shipped" | "delivered" | "cancelled";
 
 export interface IOrderData {
   _id: string;
@@ -80,4 +75,67 @@ export interface IPaymentVerification {
   transaction_status: null;
   method: string;
   date_time: Date;
+}
+
+export interface IOrderDetails {
+  _id: string;
+  orderId: string;
+  userId: {
+    _id: string;
+    name: string;
+    email: string;
+  };
+  products: IOrderDetailsProduct[];
+  totalPrice: number;
+  status: string;
+  isDeleted: boolean;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+  paymentDetails: PaymentDetails;
+  billingAddress: BillingAddress;
+}
+
+export interface IOrderDetailsProduct {
+  product: IProduct;
+  quantity: number;
+  color: string;
+  _id: string;
+}
+
+export interface PaymentDetails {
+  _id: string;
+  orderId: string;
+  amount: number;
+  status: string;
+  spOrderId: string;
+  customerInfo: CustomerInfo;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+  paymentDetails: IPaymentVerification;
+}
+
+export interface CustomerInfo {
+  name: string;
+  phone: string;
+  email: string | null;
+  address: string;
+}
+
+export interface BillingAddress {
+  _id: string;
+  userId: string;
+  orderId: string;
+  customerName: string;
+  customerAddress: string;
+  clientIp: string;
+  customerPhone: string;
+  currency: string;
+  customerCity: string;
+  customerPostCode: string;
+  isDeleted: boolean;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
 }

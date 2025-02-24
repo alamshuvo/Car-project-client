@@ -67,7 +67,7 @@ const OrderList = () => {
       } else {
         toast.error(
           res.error?.data.message ||
-            "Some error occurred while canceling order!",
+          "Some error occurred while canceling order!",
           { id: toastId },
         );
       }
@@ -84,7 +84,7 @@ const OrderList = () => {
       <h2 className="my-6 text-2xl font-bold">Order list</h2>
       <Tabs defaultValue="all" className="w-full">
         <TabsList
-          className={`grid w-full grid-cols-6 justify-start h-12 bg-transparent border-b rounded-none`}
+          className={`grid w-full grid-cols-3 sm:grid-cols-6 place-content-center  justify-start h-fit sm:h-12 bg-transparent border-b rounded-none`}
         >
           {tabs.map((tab, idx) => (
             <TabsTrigger
@@ -184,11 +184,13 @@ const OrderList = () => {
                             Order Id: {order._id}
                           </span>
                         </div>
-                        <div>
-                          <Badge variant={order.status} className="mr-2">
-                            {order.status.charAt(0).toUpperCase() +
-                              order.status.slice(1)}
-                          </Badge>
+                        <div className="flex flex-col items-end justify-center gap-1 sm:items-center sm:justify-end sm:flex-row">
+                          <div>
+                            <Badge variant={order.status} className="mr-0">
+                              {order.status.charAt(0).toUpperCase() +
+                                order.status.slice(1)}
+                            </Badge>
+                          </div>
                           {user?.role == "admin" &&
                             order.status !== "cancelled" && (
                               <OrderUpdateModal
@@ -247,7 +249,10 @@ const OrderList = () => {
                             </div>
                           </div>
                         ))}
-                        <div className="flex justify-end pt-4 border-t">
+                        <div className="flex items-center justify-between pt-4 border-t">
+                          <Link to={`/${user?.role}/order-details/${order._id}`}>
+                            <Button>Details</Button>
+                          </Link>
                           <div className="text-right">
                             <div className="text-sm text-gray-500">
                               Order Total:

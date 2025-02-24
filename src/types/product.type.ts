@@ -37,6 +37,8 @@ export interface ISimilarProduct {
 export interface ISingleProductResponse {
   result: IProduct;
   hasPurchased: boolean;
+  totalReviews?: number;
+  averageRating?: number;
 }
 
 export interface IProduct {

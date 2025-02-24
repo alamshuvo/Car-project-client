@@ -1,3 +1,4 @@
+import OrderDetails from "@/components/Order/OrderDetails";
 import UpdateProfile from "@/pages/Common/UpdateProfile";
 import Orders from "@/pages/User/Orders";
 import UserDashboard from "@/pages/User/UserDashboard";
@@ -22,6 +23,10 @@ export const userPaths: TRouteItemsPath[] = [
     name: "Orders",
     path: "order",
     element: <Orders />,
+  },
+  {
+    path: 'order-details/:id',
+    element: <OrderDetails />
   },
   {
     path: "update-profile",

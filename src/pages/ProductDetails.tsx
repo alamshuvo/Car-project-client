@@ -7,8 +7,10 @@ import {
   useGetSimilarProductQuery,
   useGetSingleProductQuery,
 } from "@/redux/features/admin/productManagement.api";
+import { Box } from "lucide-react";
 import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import StarRatings from "react-star-ratings";
 import { toast } from "sonner";
 
 const ProductDetails = () => {
@@ -37,7 +39,7 @@ const ProductDetails = () => {
     }
   };
 
-  // handle chekcout
+  // handle checkout
   const handleCheckout = () => {
     if (!selectedColor) {
       toast.error("Please select an available color!");
@@ -57,23 +59,42 @@ const ProductDetails = () => {
     if (isLoading) {
       return <ProductLoader />;
     }
+
+  if (!productResponse?.result) {
+    return <div className="flex flex-col items-center justify-center h-64 text-gray-500">
+      <Box className="w-16 h-16 mb-4" />
+      <p>Product not found / deleted!</p>
+    </div>
+  }
+
+
   return (
     <div className="w-full rounded-xl bg-gray-50">
       {/* Product/Service Details */}
-      <div className="flex gap-12 px-6 py-12 mx-auto ">
+      <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 place-content-center ">
         {/* Images Column */}
-        <div className="w-1/2">
+        <div className="w-full my-auto">
           <CarouselComponent
             bottomNavigation={true}
             carouselType="images"
-            images={productData!.images}
+            images={productData?.images}
           />
         </div>
 
         {/* Information Column */}
-        <div className="w-1/2 space-y-6">
+        <div className="w-full mt-6 space-y-6 md:mt-0">
           {/* Product/Service Name */}
           <h2 className="text-3xl font-semibold">{productData!.name}</h2>
+          <StarRatings
+            rating={productResponse!.averageRating}
+            numberOfStars={5}
+            name="rating"
+            starDimension="15px"
+            starSpacing="3px"
+            starRatedColor="gold"
+            starEmptyColor="gray"
+            starHoverColor="orange"
+          />
 
           {/* Specifications Section */}
           <div>
@@ -156,7 +177,11 @@ const ProductDetails = () => {
         </div>
       </div>
 
-      <ReviewSection hasPurchased={hasPurchased} productId={productId} />
+      <ReviewSection
+        averageRating={productResponse!.averageRating}
+        totalReviews={productResponse!.totalReviews}
+        hasPurchased={hasPurchased}
+        productId={productId} />
 
       {/* Description Section */}
       <div className="px-6 py-12 mx-auto ">
@@ -167,7 +192,7 @@ const ProductDetails = () => {
       {/* Similar Products/Services */}
       <div className="px-6 py-12 mx-auto ">
         <h3 className="mb-4 text-2xl font-semibold">Similar Products</h3>
-        <div className="grid grid-cols-3 gap-6">
+        <div className={`grid grid-cols-1 gap-6 md:grid-cols-${similarProducts?.length ?? 3}`}>
           {similarProducts &&
             similarProducts.map((product, index) => (
               <div key={index} className="p-4 border rounded-lg">

@@ -21,17 +21,19 @@ import { useUpdateOrderStatusMutation } from "@/redux/features/orders/orderApi";
 import { IOrderUpdateStatus, TOrderStatus, TResponseRedux } from "@/types";
 import { orderStatuses } from "@/utils/global.constants";
 import { toUpperCaseFirstChar } from "@/utils/helperFunctions";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import { toast } from "sonner";
 
 interface IOrderUpdateModalProps {
   orderId: string;
   currentStatus: TOrderStatus;
+  triggerButton?: ReactNode
 }
 
 export function OrderUpdateModal({
   orderId,
   currentStatus,
+  triggerButton
 }: IOrderUpdateModalProps) {
   const [selectedStatus, setSelectedStatus] =
     useState<TOrderStatus>(currentStatus);
@@ -51,7 +53,7 @@ export function OrderUpdateModal({
       } else {
         toast.error(
           res.error?.data.message ||
-            "Some error occurred while updating order status!",
+          "Some error occurred while updating order status!",
           { id: toastId },
         );
       }
@@ -66,9 +68,12 @@ export function OrderUpdateModal({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="default" className="h-6 ml-2">
-          Change
-        </Button>
+        {
+          triggerButton ? triggerButton : <Button variant="default" className="h-6">
+            Change
+          </Button>
+        }
+
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>

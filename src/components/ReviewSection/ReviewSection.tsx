@@ -22,15 +22,20 @@ import { toast } from "sonner";
 import { Button } from "../ui/button";
 import { Skeleton } from "../ui/skeleton";
 import StarRatings from "react-star-ratings";
+import { Star } from "lucide-react";
 
 interface IReviewSectionProps {
   hasPurchased?: boolean;
   productId?: string;
+  averageRating?: number;
+  totalReviews?: number;
 }
 
 export const ReviewSection = ({
   hasPurchased,
   productId,
+  averageRating,
+  totalReviews,
 }: IReviewSectionProps) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
@@ -68,7 +73,7 @@ export const ReviewSection = ({
     <div className="px-6 py-12 mx-auto">
       {/* Reviews Section */}
       <div className="flex justify-between w-full">
-        <h3 className="mb-4 text-2xl font-semibold">Customer Reviews</h3>
+        <h3 className="mb-4 text-2xl font-semibold">Customer Reviews {totalReviews ? <>({averageRating} <Star className="inline-block text-yellow-400" /> based on {totalReviews} reviews)</> : ''}</h3>
         <div>
           {hasPurchased && (
             <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
@@ -102,7 +107,7 @@ export const ReviewSection = ({
         <Skeleton className="h-4 w-[200px]" />
       ) : (
         <div className="space-y-6">
-          {reviewsData?.reviews.map((review, index) => (
+          {reviewsData?.reviews.length ? reviewsData?.reviews.map((review, index) => (
             <div key={index} className="pb-4 border-b">
               <h4 className="font-medium">{review.userId.name}</h4>
               <StarRatings
@@ -117,7 +122,8 @@ export const ReviewSection = ({
               />
               <p>{review.comment}</p>
             </div>
-          ))}
+          )) : <h2 className="w-full text-xl text-center">No reviews yet.</h2>}
+
         </div>
       )}
     </div>

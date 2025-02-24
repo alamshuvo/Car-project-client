@@ -15,12 +15,14 @@ import {
   Box,
   BoxIcon,
   Home,
+  Info,
+  LogIn,
   LogOut,
   Menu,
   PhoneCall,
   Settings,
   Shield,
-  User2,
+  UserRoundIcon,
 } from "lucide-react";
 import { Button } from "../ui/button";
 import { Link, NavLink } from "react-router-dom";
@@ -37,7 +39,6 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { Avatar, AvatarFallback } from "../ui/avatar";
 const NavBar = () => {
   const [open, setOpen] = useState(false);
   const dispatch = useAppDispatch();
@@ -54,27 +55,89 @@ const NavBar = () => {
         </Link>
       </div>
       <nav className="flex justify-end md:justify-center ">
-        <div className="block md:hidden">
+        <div className="flex items-center justify-end space-x-2 md:hidden">
+          {user ? (
+            <DropdownMenu >
+              <DropdownMenuTrigger asChild>
+                <Button className="rounded-full w-7 h-7">
+                  {user?.role === "user" ? <UserRoundIcon /> : <Shield />}
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56" align="end" forceMount>
+                <DropdownMenuLabel className="font-normal">
+                  <div className="flex flex-col space-y-1">
+                    <p className="text-sm font-medium leading-none">
+                      {user?.name}
+                    </p>
+                    <p className="text-xs leading-none text-muted-foreground">
+                      {user?.email}
+                    </p>
+                  </div>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuGroup>
+                  <Link to={`/${user.role}`}>
+                    <DropdownMenuItem className="cursor-pointer">
+                      Dashboard
+                      <DropdownMenuShortcut>
+                        <Settings className="w-4 h-4" />
+                      </DropdownMenuShortcut>
+                    </DropdownMenuItem>
+                  </Link>
+                  <Link to={`/${user.role}/order`}>
+                    <DropdownMenuItem className="cursor-pointer">
+                      Orders
+                      <DropdownMenuShortcut>
+                        <BoxIcon className="w-4 h-4" />
+                      </DropdownMenuShortcut>
+                    </DropdownMenuItem>
+                  </Link>
+                </DropdownMenuGroup>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  onClick={handleLogout}
+                  className="cursor-pointer"
+                >
+                  Log out
+                  <DropdownMenuShortcut>
+                    <LogOut className="w-4 h-4" />
+                  </DropdownMenuShortcut>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <Button className="rounded-full w-7 h-7">
+              <Link to="/login"><LogIn /></Link>
+            </Button>
+          )}
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger>
               <Menu />
             </SheetTrigger>
             <SheetContent>
               <SheetHeader>
-                {/* <SheetTitle>Are you absolutely sure?</SheetTitle> */}
-                <SheetDescription className="mt-12 text-3xl font-bold text-left">
+                {/* Mobile Menu*/}
+                <SheetDescription className="grid grid-rows-3 gap-2 mt-12 text-2xl font-bold text-left ">
                   <Link to={"/"} onClick={() => setOpen(false)}>
                     <div className="flex items-center">
-                      <Home size={30} className="mr-4" />
+                      <Home size={24} className="mr-4" />
                       <span>Home</span>
                     </div>
                   </Link>
                   <Link to={"/products"} onClick={() => setOpen(false)}>
                     <div className="flex items-center">
-                      <Box size={30} className="mr-4" />
+                      <Box size={24} className="mr-4" />
                       <span>Products</span>
                     </div>
                   </Link>
+                  <Link to={"/about"} onClick={() => setOpen(false)}>
+                    <div className="flex items-center">
+                      <Info size={24} className="mr-4" />
+                      <span>About</span>
+                    </div>
+                  </Link>
+
+
                 </SheetDescription>
               </SheetHeader>
             </SheetContent>
@@ -122,15 +185,8 @@ const NavBar = () => {
           {user ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button
-                  variant="ghost"
-                  className="relative w-8 h-8 rounded-full"
-                >
-                  <Avatar className="w-8 h-8">
-                    <AvatarFallback>
-                      {user?.role === "user" ? <User2 /> : <Shield />}
-                    </AvatarFallback>
-                  </Avatar>
+                <Button className="rounded-full w-7 h-7">
+                  {user?.role === "user" ? <UserRoundIcon /> : <Shield />}
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-56" align="end" forceMount>
