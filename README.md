@@ -4,6 +4,9 @@
 
 Car Valley is a modern web application for car sales and management, built with React, Redux (State Manager), TypeScript, and Vite. It provides a seamless experience for browsing, purchasing and managing vehicles and users.
 
+## 🌟 Video Demo
+[![YouTube Video](https://img.youtube.com/vi/2FYyxic4jvs/0.jpg)](https://www.youtube.com/watch?v=2FYyxic4jvs)
+
 ## 🌟 Live Demo
 
 [Visit Car Valley](https://carstore-frontend.vercel.app/)
