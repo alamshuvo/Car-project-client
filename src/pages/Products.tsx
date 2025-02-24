@@ -1,7 +1,6 @@
 import {
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
   PaginationItem,
   PaginationLink,
   PaginationNext,
@@ -9,7 +8,7 @@ import {
 } from "@/components/ui/pagination";
 import { Button } from "@/components/ui/button";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AirVent, Box, Fuel, Menu, ParkingMeter } from "lucide-react";
 import { User2 } from "lucide-react";
 import { TQueryParam, TUIProduct } from "@/types";
@@ -20,9 +19,12 @@ import ProductFilterSection from "@/components/ProductFilterSection/ProductFilte
 import { Skeleton } from "@/components/ui/skeleton";
 
 const Products = () => {
+
   const [params, setParams] = useState<TQueryParam[]>([]);
   const { data, isLoading, isFetching } = useGetAllProductsQuery(params);
   let productData: TUIProduct[] = [];
+  const meta = data?.meta;
+  console.log(meta);
   if (data?.data) {
     const responseData = data?.data;
     productData = responseData.map((product) => ({
@@ -62,6 +64,7 @@ const Products = () => {
   const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [inStockOnly, setInStockOnly] = useState(false);
+  const [page, setPage] = useState(1);
 
   const updateFilter = () => {
     setParams([
@@ -72,6 +75,11 @@ const Products = () => {
     ]);
   };
 
+  useEffect(() => {
+    const newParams = [...params];
+    newParams.push({ name: "page", value: `${page}` },)
+    setParams(newParams);
+  }, [page]);
   return (
     <div className="flex flex-col w-full">
       <h3 className="my-12 text-5xl font-bold text-center uppercase text-blue-950">
@@ -149,30 +157,49 @@ const Products = () => {
           </div>
         </div>
       ) : (
-        <Pagination className="my-8">
-          <PaginationContent>
-            <PaginationItem>
-              <PaginationPrevious href="#" />
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink href="#">1</PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink href="#" isActive>
-                2
-              </PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink href="#">3</PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationEllipsis />
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationNext href="#" />
-            </PaginationItem>
-          </PaginationContent>
-        </Pagination>
+        <div className="flex items-center justify-between mt-6">
+          <p>
+            Showing{" "}
+            {meta!.page === 1 ? 1 : meta!.page * meta!.limit - meta!.limit + 1} to{" "}
+            {meta!.page * meta!.limit > meta!.total
+              ? meta!.total
+              : meta!.page * meta!.limit}{" "}
+            of total {meta!.total}
+          </p>
+          <div>
+            <Pagination>
+              <PaginationContent>
+                <PaginationItem>
+                  <PaginationPrevious
+                    href="#"
+                    onClick={() => setPage(page > 1 ? page - 1 : 1)}
+                  />
+                </PaginationItem>
+                {Array.from({ length: meta!.totalPages }).map((_, index) => (
+                  <PaginationItem key={index}>
+                    <PaginationLink
+                      href="#"
+                      isActive={page === index + 1}
+                      onClick={() => setPage(index + 1)}
+                    >
+                      {index + 1}
+                    </PaginationLink>
+                  </PaginationItem>
+                ))}
+                <PaginationItem>
+                  <PaginationNext
+                    href="#"
+                    onClick={() =>
+                      setPage(
+                        page === meta!.totalPages ? meta!.totalPages : page + 1,
+                      )
+                    }
+                  />
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
+          </div>
+        </div>
       )}
     </div>
   );

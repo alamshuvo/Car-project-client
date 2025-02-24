@@ -12,8 +12,8 @@ import {
 import { toast } from "sonner";
 import { logout, setUser } from "../features/auth/authSlice";
 
-// const BACKEND_URL = "https://carstore-with-payment-gateway.vercel.app";
-const BACKEND_URL = "http://localhost:5000";
+const BACKEND_URL = "https://carstore-with-payment-gateway.vercel.app";
+// const BACKEND_URL = "http://localhost:5000";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: `${BACKEND_URL}/api`,
