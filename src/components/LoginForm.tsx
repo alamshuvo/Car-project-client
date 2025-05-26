@@ -39,14 +39,14 @@ export function LoginForm({
           setUser({
             user,
             token: res.data.data.token,
-          }),
+          })
         );
         toast.success("Login success.", { id: loadingId });
         return;
       }
       toast.error(
         res.error?.data.message || "Something went wrong while logging you in.",
-        { id: loadingId },
+        { id: loadingId }
       );
     } catch {
       toast.error("Something went wrong while logging you in.", {
@@ -54,7 +54,12 @@ export function LoginForm({
       });
     }
   };
-
+  const handleAdmin = () => {
+    console.log("admin");
+  };
+  const handleUser = ()=>{
+    console.log("user");
+  }
   const defaultValues = {
     email: "tamimmahmud0@gmail.com",
     password: "123456789",
@@ -107,6 +112,12 @@ export function LoginForm({
               </a>
             </div>
           </FormComponent>
+          <div className="grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 gap-2 mt-4">
+            <Button onClick={() => handleAdmin()} className="w-full">
+              Admin Login
+            </Button>
+            <Button onClick={()=>handleUser()} className="w-full">User Login</Button>
+          </div>
         </CardContent>
       </Card>
     </div>
