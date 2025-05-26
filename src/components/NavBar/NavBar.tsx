@@ -171,6 +171,14 @@ const NavBar = () => {
                 >
                   About
                 </NavLink>
+                <NavLink
+                  to={"/contact"}
+                  className={({ isActive }) =>
+                    `block mr-4 ${isActive ? "text-purple-600 font-semibold" : "text-gray-700"}`
+                  }
+                >
+                  Contact Us
+                </NavLink>
               </div>
             </NavigationMenuItem>
           </NavigationMenuList>
