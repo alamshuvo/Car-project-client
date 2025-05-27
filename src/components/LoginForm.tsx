@@ -19,6 +19,13 @@ import { ILoginResponse, TResponseRedux } from "@/types";
 import { useAppDispatch } from "@/redux/hook";
 import { verifyToken } from "@/utils/verifyToken";
 import { setUser, TUser } from "@/redux/features/auth/authSlice";
+import { useState } from "react";
+
+
+interface ILoginProps {
+  email: string;
+  password: string;
+}
 
 export function LoginForm({
   className,
@@ -27,7 +34,11 @@ export function LoginForm({
   const [login] = useLoginMutation();
   const dispatch = useAppDispatch();
 
-  // const {user} =
+  const [defaultValues, setDefaultValues] = useState<ILoginProps>({
+    email: "tamimmahmud0@gmail.com",
+    password: "123456789",
+  });
+
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     const loadingId = toast.loading("Logging in...");
@@ -54,16 +65,26 @@ export function LoginForm({
       });
     }
   };
+
   const handleAdmin = () => {
-    console.log("admin");
+    const adminValues = {
+      email: 'admin@gmail.com',
+      password: '123456789',
+    };
+    setDefaultValues(adminValues);
+    onSubmit(adminValues);
   };
-  const handleUser = ()=>{
-    console.log("user");
-  }
-  const defaultValues = {
-    email: "tamimmahmud0@gmail.com",
-    password: "123456789",
+
+  const handleUser = () => {
+    const userValues = {
+      email: 'tamimmahmud0@gmail.com',
+      password: '123456789',
+    };
+    setDefaultValues(userValues);
+    onSubmit(userValues);
   };
+
+
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -112,11 +133,11 @@ export function LoginForm({
               </a>
             </div>
           </FormComponent>
-          <div className="grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 gap-2 mt-4">
+          <div className="grid grid-cols-1 gap-2 mt-4 lg:grid-cols-2 md:grid-cols-2">
             <Button onClick={() => handleAdmin()} className="w-full">
               Admin Login
             </Button>
-            <Button onClick={()=>handleUser()} className="w-full">User Login</Button>
+            <Button onClick={() => handleUser()} className="w-full">User Login</Button>
           </div>
         </CardContent>
       </Card>
