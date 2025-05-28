@@ -48,7 +48,7 @@ const NavBar = () => {
   };
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 items-center justify-between h-[100px] sticky top-0 z-50 ">
+    <div className="grid grid-cols-2 md:grid-cols-3 items-center bg-purple-600  justify-between h-[100px] sticky top-0 z-50 p-4">
       <div className="logo">
         <Link to={"/"}>
           <Logo height={150} width={150} />
@@ -150,7 +150,7 @@ const NavBar = () => {
                 <NavLink
                   to={"/"}
                   className={({ isActive }) =>
-                    `block mr-4 ${isActive ? "text-purple-600 font-semibold" : "text-gray-700"}`
+                    `block mr-4 ${isActive ? "text-white  font-semibold" : "text-gray-950"}`
                   }
                 >
                   Home
@@ -158,7 +158,7 @@ const NavBar = () => {
                 <NavLink
                   to={"/products"}
                   className={({ isActive }) =>
-                    `block mr-4 ${isActive ? "text-purple-600 font-semibold" : "text-gray-700"}`
+                    `block mr-4 ${isActive ? "text-white  font-semibold" : "text-gray-950"}`
                   }
                 >
                   Products
@@ -166,7 +166,7 @@ const NavBar = () => {
                 <NavLink
                   to={"/about"}
                   className={({ isActive }) =>
-                    `block mr-4 ${isActive ? "text-purple-600 font-semibold" : "text-gray-700"}`
+                    `block mr-4 ${isActive ? "text-white  font-semibold" : "text-gray-950"}`
                   }
                 >
                   About
@@ -174,7 +174,7 @@ const NavBar = () => {
                 <NavLink
                   to={"/contact"}
                   className={({ isActive }) =>
-                    `block mr-4 ${isActive ? "text-purple-600 font-semibold" : "text-gray-700"}`
+                    `block mr-4 ${isActive ? "text-white  font-semibold" : "text-gray-950"}`
                   }
                 >
                   Contact Us
@@ -186,14 +186,14 @@ const NavBar = () => {
       </nav>
       <div className="flex justify-end">
         <div className="items-center hidden w-fit md:flex">
-          <div className="flex mr-4 contact">
+          <div className="flex mr-4 contact text-white">
             <PhoneCall />
             (406) 555-0120
           </div>
           {user ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button className="rounded-full w-7 h-7">
+                <Button className="rounded-full w-7 h-7 bg-white text-purple-600">
                   {user?.role === "user" ? <UserRoundIcon /> : <Shield />}
                 </Button>
               </DropdownMenuTrigger>
@@ -240,7 +240,7 @@ const NavBar = () => {
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
-            <Button>
+            <Button className="bg-white text-purple-400 hover:text-white">
               <Link to="/login">Sign In</Link>
             </Button>
           )}

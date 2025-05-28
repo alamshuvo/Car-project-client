@@ -12,7 +12,7 @@ interface ISingleProduct {
 const SingleProduct = ({ product, forCarousel }: ISingleProduct) => {
   return (
     <Card className="relative transition-all duration-300 bg-gray-100 cursor-pointer hover:bg-white hover:shadow-lg">
-      <p className="absolute right-0 p-2 m-2 text-xl font-bold text-white rounded-md bg-primary">
+      <p className="absolute right-0 p-2 m-2 text-xl font-bold text-primary rounded-md ">
         $ {product.price}
       </p>
       <CardContent

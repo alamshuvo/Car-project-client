@@ -20,7 +20,8 @@ import { useAppDispatch } from "@/redux/hook";
 import { verifyToken } from "@/utils/verifyToken";
 import { setUser, TUser } from "@/redux/features/auth/authSlice";
 import { useState } from "react";
-
+import { Link } from "react-router-dom";
+import Logo from "@/assets/logos/Logo";
 
 interface ILoginProps {
   email: string;
@@ -38,7 +39,6 @@ export function LoginForm({
     email: "tamimmahmud0@gmail.com",
     password: "123456789",
   });
-
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     const loadingId = toast.loading("Logging in...");
@@ -68,8 +68,8 @@ export function LoginForm({
 
   const handleAdmin = () => {
     const adminValues = {
-      email: 'admin@gmail.com',
-      password: '123456789',
+      email: "admin@gmail.com",
+      password: "123456789",
     };
     setDefaultValues(adminValues);
     onSubmit(adminValues);
@@ -77,20 +77,26 @@ export function LoginForm({
 
   const handleUser = () => {
     const userValues = {
-      email: 'tamimmahmud0@gmail.com',
-      password: '123456789',
+      email: "tamimmahmud0@gmail.com",
+      password: "123456789",
     };
     setDefaultValues(userValues);
     onSubmit(userValues);
   };
 
-
-
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader>
-          <CardTitle className="text-2xl">Login</CardTitle>
+          <CardTitle className="text-2xl flex items-center justify-between">
+            Login
+            <div className="logo">
+              <Link to={"/"}>
+                <Logo height={100} width={100} />
+              </Link>
+            </div>
+          </CardTitle>
+
           <CardDescription>
             Enter your email below to login to your account
           </CardDescription>
@@ -137,7 +143,9 @@ export function LoginForm({
             <Button onClick={() => handleAdmin()} className="w-full">
               Admin Login
             </Button>
-            <Button onClick={() => handleUser()} className="w-full">User Login</Button>
+            <Button onClick={() => handleUser()} className="w-full">
+              User Login
+            </Button>
           </div>
         </CardContent>
       </Card>
