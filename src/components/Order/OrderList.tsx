@@ -54,6 +54,7 @@ const OrderList = () => {
   const [updateStatus] = useUpdateOrderStatusMutation();
 
   // function to handle order cancellation
+  // some code added 
   const cancelOrder = async (orderId: string) => {
     const toastId = toast.loading("Updating order status");
     try {
@@ -86,7 +87,7 @@ const OrderList = () => {
         <TabsList
           className={`grid w-full grid-cols-3 sm:grid-cols-6 place-content-center  justify-start h-fit sm:h-12 bg-transparent border-b rounded-none`}
         >
-          {tabs.map((tab, idx) => (
+          {tabs?.map((tab, idx) => (
             <TabsTrigger
               onClick={() => {
                 setStatus(tab);
@@ -146,7 +147,7 @@ const OrderList = () => {
           </div>
         )}
         {/* Dynamically switch content based on the tab status */}
-        {tabs.map((tab) => (
+        {tabs?.map((tab) => (
           <TabsContent key={tab} value={tab} className="mt-6">
             <div className="space-y-4">
               {isLoading || isFetching ? (
@@ -174,8 +175,8 @@ const OrderList = () => {
                     </CardContent>
                   </Card>
                 ))
-              ) : orders.length ? (
-                orders.map((order) => (
+              ) : orders.length && isLoading ? (
+                orders?.map((order) => (
                   <Card key={order.id}>
                     <CardContent className="p-4">
                       <div className="flex items-center justify-between pb-4 mb-4 border-b">
@@ -216,7 +217,7 @@ const OrderList = () => {
                         </div>
                       </div>
                       <div className="space-y-4">
-                        {order.products.map((item) => (
+                        {order?.products?.map((item) => (
                           <div key={item._id} className="flex gap-4">
                             <Link to={`/product-details/${item.product._id}`}>
                               <div className="w-16 h-16 overflow-hidden rounded">
