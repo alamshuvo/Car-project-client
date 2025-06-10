@@ -54,7 +54,7 @@ const OrderList = () => {
   const [updateStatus] = useUpdateOrderStatusMutation();
 
   // function to handle order cancellation
-  // some code added 
+  // some code added added
   const cancelOrder = async (orderId: string) => {
     const toastId = toast.loading("Updating order status");
     try {
