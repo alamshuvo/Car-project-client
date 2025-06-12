@@ -25,7 +25,7 @@ import { orderStatuses } from "@/utils/global.constants";
 import { ConfirmModal } from "../ConfirmModal/ConfirmModal";
 import { Button } from "../ui/button";
 import { toast } from "sonner";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 const OrderList = () => {
   const [params, setParams] = useState<TQueryParam[]>([]);
   const [page, setPage] = useState(1);
@@ -49,7 +49,7 @@ const OrderList = () => {
 
   const orders = data?.data || [];
   const meta = data?.meta;
-
+ console.log(orders);
   const tabs = ["all", ...orderStatuses];
   const [updateStatus] = useUpdateOrderStatusMutation();
 
@@ -175,14 +175,14 @@ const OrderList = () => {
                     </CardContent>
                   </Card>
                 ))
-              ) : orders.length && isLoading ? (
+              ) : orders.length>0  && !isLoading? (
                 orders?.map((order) => (
                   <Card key={order.id}>
                     <CardContent className="p-4">
                       <div className="flex items-center justify-between pb-4 mb-4 border-b">
                         <div className="flex items-center gap-2">
                           <span className="font-medium">
-                            Order Id: {order._id}
+                            Order Id: {order.id}
                           </span>
                         </div>
                         <div className="flex flex-col items-end justify-center gap-1 sm:items-center sm:justify-end sm:flex-row">
@@ -216,14 +216,14 @@ const OrderList = () => {
                             )}
                         </div>
                       </div>
-                      <div className="space-y-4">
+                      {/* <div className="space-y-4">
                         {order?.products?.map((item) => (
                           <div key={item._id} className="flex gap-4">
                             <Link to={`/product-details/${item.product._id}`}>
                               <div className="w-16 h-16 overflow-hidden rounded">
                                 <img
-                                  src={item.product.images[0]}
-                                  alt={item.product.name}
+                                  src={item?.product?.images[0]}
+                                  alt={item?.product?.name}
                                   className="object-cover w-full h-full"
                                 />
                               </div>
@@ -263,7 +263,7 @@ const OrderList = () => {
                             </div>
                           </div>
                         </div>
-                      </div>
+                      </div> */}
                     </CardContent>
                   </Card>
                 ))

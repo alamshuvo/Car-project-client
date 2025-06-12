@@ -1,6 +1,14 @@
-import { Skeleton } from "@/components/ui/skeleton";
 import { useGetUserDashboardStatsQuery } from "@/redux/features/user/userApi";
-import { CreditCard, ShoppingBag } from "lucide-react";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  CartesianGrid,
+} from "recharts";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const UserDashboard = () => {
   const { data, isLoading } = useGetUserDashboardStatsQuery([], {
@@ -9,84 +17,49 @@ const UserDashboard = () => {
     refetchOnReconnect: true,
   });
 
+  // Reusable component for individual bar charts
+  const StatBar = ({ label, value, color }: { label: string; value: number; color: string }) => {
+    const chartData = [{ name: label, value }];
+
+    return (
+      <div className="w-full p-4 bg-white rounded-2xl shadow">
+        <h2 className="mb-2 text-lg font-semibold text-gray-700 text-center">{label}</h2>
+        <ResponsiveContainer width="100%" height={200}>
+          <BarChart data={chartData}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" hide />
+            <YAxis />
+            <Tooltip />
+            <Bar dataKey="value" fill={color} radius={[8, 8, 0, 0]} barSize={80} />
+          </BarChart>
+        </ResponsiveContainer>
+        <p className="mt-2 text-xl font-bold text-center text-gray-900">
+          {label === "Total Spent" ? `$${value.toFixed(2)}` : value}
+        </p>
+      </div>
+    );
+  };
+
   return (
     <div className="min-h-screen p-6 bg-gray-100">
       <h1 className="mb-8 text-3xl font-bold text-center">User Dashboard</h1>
 
-      <div className="grid max-w-4xl grid-cols-1 gap-6 mx-auto md:grid-cols-2">
-        {/* Total Spent Card */}
-        <div className="flex items-center p-6 space-x-4 bg-white shadow-lg rounded-2xl">
-          <div className="p-4 text-blue-600 bg-blue-100 rounded-full">
-            <CreditCard className="w-8 h-8" />
-          </div>
-          <div>
-            <h2 className="text-lg font-semibold text-gray-700">Total Spent</h2>
-            <p className="text-2xl font-bold text-gray-900">
-              {isLoading ? (
-                <Skeleton className="h-6 w-44" />
-              ) : (
-                `$${data?.totalSpent.toFixed(2)}`
-              )}
-            </p>
-          </div>
-        </div>
-
-        {/* Total Orders Card */}
-        <div className="flex items-center p-6 space-x-4 bg-white shadow-lg rounded-2xl">
-          <div className="p-4 text-green-600 bg-green-100 rounded-full">
-            <ShoppingBag className="w-8 h-8" />
-          </div>
-          <div>
-            <h2 className="text-lg font-semibold text-gray-700">
-              Total Orders
-            </h2>
-            <div className="text-2xl font-bold text-gray-900">
-              {isLoading ? (
-                <Skeleton className="h-6 w-44" />
-              ) : (
-                data?.totalOrders
-              )}
-            </div>
-          </div>
-        </div>
-
-        {/* Total Pending Orders Card */}
-        <div className="flex items-center p-6 space-x-4 bg-white shadow-lg rounded-2xl">
-          <div className="p-4 text-yellow-600 bg-yellow-100 rounded-full">
-            <ShoppingBag className="w-8 h-8" />
-          </div>
-          <div>
-            <h2 className="text-lg font-semibold text-gray-700">
-              Total Pending Orders
-            </h2>
-            <div className="text-2xl font-bold text-gray-900">
-              {isLoading ? (
-                <Skeleton className="h-6 w-44" />
-              ) : (
-                data?.pendingOrders
-              )}
-            </div>
-          </div>
-        </div>
-
-        {/* Total Processing Orders Card */}
-        <div className="flex items-center p-6 space-x-4 bg-white shadow-lg rounded-2xl">
-          <div className="p-4 text-blue-600 bg-blue-100 rounded-full">
-            <ShoppingBag className="w-8 h-8" />
-          </div>
-          <div>
-            <h2 className="text-lg font-semibold text-gray-700">
-              Total Processing Orders
-            </h2>
-            <div className="text-2xl font-bold text-gray-900">
-              {isLoading ? (
-                <Skeleton className="h-6 w-44" />
-              ) : (
-                data?.processingOrders
-              )}
-            </div>
-          </div>
-        </div>
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-2 max-w-6xl mx-auto">
+        {isLoading ? (
+          <>
+            <Skeleton className="h-[250px] w-full" />
+            <Skeleton className="h-[250px] w-full" />
+            <Skeleton className="h-[250px] w-full" />
+            <Skeleton className="h-[250px] w-full" />
+          </>
+        ) : (
+          <>
+            <StatBar label="Total Spent" value={data?.totalSpent || 0} color="#3b82f6" />
+            <StatBar label="Total Orders" value={data?.totalOrders || 0} color="#10b981" />
+            <StatBar label="Pending Orders" value={data?.pendingOrders || 0} color="#f59e0b" />
+            <StatBar label="Processing Orders" value={data?.processingOrders || 0} color="#6366f1" />
+          </>
+        )}
       </div>
     </div>
   );
