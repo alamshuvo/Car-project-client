@@ -9,37 +9,46 @@ interface ISingleProduct {
   product: TUIProduct;
   forCarousel?: boolean;
 }
+
 const SingleProduct = ({ product, forCarousel }: ISingleProduct) => {
   return (
-    <Card className="relative transition-all duration-300 bg-gray-100 cursor-pointer hover:bg-white hover:shadow-lg">
-      <p className="absolute right-0 p-2 m-2 text-xl font-bold text-primary rounded-md ">
-        $ {product.price}
+    <Card className="relative group transition-all duration-300 bg-white border border-gray-200 rounded-xl hover:shadow-xl">
+      {/* Price Tag */}
+      <p className="absolute top-3 right-3 bg-primary text-white text-sm font-semibold px-3 py-1 rounded-md z-10">
+        ${product.price}
       </p>
-      <CardContent
-        className={`p-2 ${forCarousel ? "sm:flex justify-center items-center block" : ""}`}
-      >
-        <img
-          src={product.imageURL}
-          className="h-[200px] rounded-xl mix-blend-multiply"
-          alt=""
-        />
-        <div className="p-2 pt-0">
-          <h3 className="mt-3 text-lg font-bold text-blue-800 uppercase">
-            <Link to={`/product-details/${product._id}`}>{product.title}</Link>
+
+      {/* Card Content */}
+      <CardContent className={`p-4 ${forCarousel ? "sm:flex justify-center items-center block" : ""}`}>
+        {/* Product Image */}
+        <div className="w-full flex justify-center mb-4">
+          <img
+            src={product.imageURL}
+            alt={product.title}
+            className="h-[180px] w-auto rounded-lg object-contain transition-transform duration-300 group-hover:scale-105 mix-blend-multiply"
+          />
+        </div>
+
+        {/* Product Info */}
+        <div className="text-center">
+          <h3 className="text-lg font-semibold text-blue-900 uppercase mb-2">
+            <Link to={`/product-details/${product._id}`} className="hover:underline">
+              {product.title}
+            </Link>
           </h3>
-          <div className="flex items-center mb-3">
+
+          {/* Rating Section */}
+          <div className="flex items-center justify-center mb-3">
             <StarRatings
               rating={product.rating}
-              // changeRating={this.changeRating}
               numberOfStars={5}
               name="rating"
-              starDimension="15px"
+              starDimension="16px"
               starSpacing="3px"
               starRatedColor="gold"
-              starEmptyColor="gray"
-              starHoverColor="orange"
+              starEmptyColor="lightgray"
             />
-            <p className="pt-1 ml-4 text-sm text-gray-500">
+            <p className="ml-2 text-sm text-gray-500">
               {product.rating} (
               {product.reviewCount > 1000
                 ? `${Math.floor(product.reviewCount / 1000)}k`
@@ -48,29 +57,27 @@ const SingleProduct = ({ product, forCarousel }: ISingleProduct) => {
             </p>
           </div>
 
-          <div className="grid grid-cols-4 gap-2 mb-4">
+          {/* Product Properties */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
             {product.productProperties.map((property, idx) => (
-              <div
-                key={idx}
-                className={`grid place-items-center ${idx !== product.productProperties.length - 1 ? "mr-4" : "mr-0"}`}
-              >
-                <div className="flex flex-col items-center justify-center p-3 bg-blue-100 rounded-lg">
+              <div key={idx} className="flex flex-col items-center">
+                <div className="p-2 bg-blue-100 rounded-full mb-1">
                   {property.icon}
                 </div>
-                <p className="text-sm">{property.title}</p>
+                <p className="text-xs font-medium text-gray-700">{property.title}</p>
               </div>
             ))}
           </div>
-          <div className="flex items-center justify-between">
+
+          {/* Action Buttons */}
+          <div className="flex flex-col  justify-center items-center gap-3">
             <Link to={`/product-details/${product._id}`}>
-              <Button className="px-6 py-5">
-                {" "}
-                Buy Now
-                <ShoppingCart />{" "}
+              <Button className="w-40 flex justify-center gap-2 items-center py-5">
+                Buy Now <ShoppingCart size={16} />
               </Button>
             </Link>
             <Link to={`/product-details/${product._id}`}>
-              <Button variant="outline" className="px-6 py-5">
+              <Button variant="outline" className="w-40 py-5">
                 View
               </Button>
             </Link>

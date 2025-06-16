@@ -48,7 +48,7 @@ const NavBar = () => {
   };
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 items-center bg-purple-600  justify-between h-[100px] sticky top-0 z-50 p-4">
+    <div className="grid grid-cols-2 md:grid-cols-3 items-center bg-purple-600  justify-between h-[100px] sticky top-0 z-50 p-4 ">
       <div className="logo">
         <Link to={"/"}>
           <Logo height={150} width={150} />
