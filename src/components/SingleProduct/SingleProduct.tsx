@@ -19,7 +19,11 @@ const SingleProduct = ({ product, forCarousel }: ISingleProduct) => {
       </p>
 
       {/* Card Content */}
-      <CardContent className={`p-4 ${forCarousel ? "sm:flex justify-center items-center block" : ""}`}>
+      <CardContent
+        className={`p-4 ${
+          forCarousel ? "sm:flex justify-center items-center block" : ""
+        }`}
+      >
         {/* Product Image */}
         <div className="w-full flex justify-center mb-4">
           <img
@@ -32,7 +36,10 @@ const SingleProduct = ({ product, forCarousel }: ISingleProduct) => {
         {/* Product Info */}
         <div className="text-center">
           <h3 className="text-lg font-semibold text-blue-900 uppercase mb-2">
-            <Link to={`/product-details/${product._id}`} className="hover:underline">
+            <Link
+              to={`/product-details/${product._id}`}
+              className="hover:underline"
+            >
               {product.title}
             </Link>
           </h3>
@@ -64,20 +71,32 @@ const SingleProduct = ({ product, forCarousel }: ISingleProduct) => {
                 <div className="p-2 bg-blue-100 rounded-full mb-1">
                   {property.icon}
                 </div>
-                <p className="text-xs font-medium text-gray-700">{property.title}</p>
+                <p className="text-xs font-medium text-gray-700">
+                  {property.title}
+                </p>
               </div>
             ))}
           </div>
 
           {/* Action Buttons */}
-          <div className="flex flex-col  justify-center items-center gap-3">
-            <Link to={`/product-details/${product._id}`}>
-              <Button className="w-40 flex justify-center gap-2 items-center py-5">
+          <div
+            className={`flex ${
+              forCarousel ? "sm:flex-row" : "flex-col"
+            } justify-center items-center gap-3`}
+          >
+            <Link
+              to={`/product-details/${product._id}`}
+              className="w-full sm:w-40"
+            >
+              <Button className="w-full flex justify-center gap-2 items-center py-5">
                 Buy Now <ShoppingCart size={16} />
               </Button>
             </Link>
-            <Link to={`/product-details/${product._id}`}>
-              <Button variant="outline" className="w-40 py-5">
+            <Link
+              to={`/product-details/${product._id}`}
+              className="w-full sm:w-40"
+            >
+              <Button variant="outline" className="w-full py-5">
                 View
               </Button>
             </Link>
