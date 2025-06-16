@@ -150,7 +150,7 @@ const NavBar = () => {
                 <NavLink
                   to={"/"}
                   className={({ isActive }) =>
-                    `block mr-4 ${isActive ? "text-white  font-semibold" : "text-gray-950"}`
+                    `block mr-4 ${isActive ? "text-white  font-semibold" : "text-[#d4cdcd]"}`
                   }
                 >
                   Home
@@ -158,7 +158,7 @@ const NavBar = () => {
                 <NavLink
                   to={"/products"}
                   className={({ isActive }) =>
-                    `block mr-4 ${isActive ? "text-white  font-semibold" : "text-gray-950"}`
+                    `block mr-4 ${isActive ? "text-white  font-semibold" : "text-[#d4cdcd]"}`
                   }
                 >
                   Products
@@ -166,7 +166,7 @@ const NavBar = () => {
                 <NavLink
                   to={"/about"}
                   className={({ isActive }) =>
-                    `block mr-4 ${isActive ? "text-white  font-semibold" : "text-gray-950"}`
+                    `block mr-4 ${isActive ? "text-white  font-semibold" : "text-[#d4cdcd]"}`
                   }
                 >
                   About
@@ -174,7 +174,7 @@ const NavBar = () => {
                 <NavLink
                   to={"/contact"}
                   className={({ isActive }) =>
-                    `block mr-4 ${isActive ? "text-white  font-semibold" : "text-gray-950"}`
+                    `block mr-4 ${isActive ? "text-white  font-semibold" : "text-[#d4cdcd]"}`
                   }
                 >
                   Contact Us
